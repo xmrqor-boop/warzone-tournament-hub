@@ -103,17 +103,21 @@ a{ color:inherit; text-decoration:none; }
 /* ================= AUTH SCREEN ================= */
 .auth-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
 .auth-card-v3{
-  width:100%; max-width:520px;
+  width:100%; max-width:480px;
   background:#0d111a; border:1px solid rgba(0,242,254,0.2);
   border-radius:24px; box-shadow:0 25px 60px rgba(0,0,0,0.85);
   padding:36px 30px; text-align:center;
 }
 
-.auth-badge-icon{
-  width:70px; height:70px; border-radius:50%;
-  background:radial-gradient(circle, rgba(0,242,254,0.2) 0%, rgba(8,11,18,0) 70%);
-  border:1.5px solid var(--border-glow); display:flex; align-items:center; justify-content:center;
-  font-size:28px; color:var(--accent); margin:0 auto 16px;
+.auth-tabs{
+  display:flex; background:rgba(0,0,0,0.3); border-radius:12px; padding:4px; margin-bottom:24px;
+}
+.auth-tab-btn{
+  flex:1; padding:10px; border-radius:8px; font-weight:700; font-size:13px; color:var(--text-lo);
+  background:transparent; transition:all .2s ease;
+}
+.auth-tab-btn.active{
+  background:var(--accent); color:#000; font-weight:800; box-shadow:0 0 15px var(--accent-glow);
 }
 
 .f-group{ margin-bottom:16px; text-align:right; }
@@ -136,7 +140,7 @@ a{ color:inherit; text-decoration:none; }
 
 .google-btn-auth{
   width:100%; background:#ffffff; color:#1e293b;
-  border-radius:12px; padding:13px 18px; font-weight:800; font-size:14px;
+  border-radius:12px; padding:12px 18px; font-weight:800; font-size:14px;
   display:flex; align-items:center; justify-content:center; gap:10px;
   border:none; cursor:pointer; transition:all .2s ease;
 }
@@ -295,34 +299,53 @@ a{ color:inherit; text-decoration:none; }
   </div>
 </div>
 
-<!-- ================= 2. AUTH SCREEN (DIRECT & GOOGLE) ================= -->
+<!-- ================= 2. AUTH SCREEN (LOGIN & SIGN UP) ================= -->
 <div class="auth-wrap hidden" id="authScreen">
   <div class="auth-card-v3">
-    <div class="auth-badge-icon">
-      <i class="fa-solid fa-gamepad"></i>
+    
+    <!-- تبويبات التبديل بين تسجيل الدخول وإنشاء حساب -->
+    <div class="auth-tabs">
+      <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthMode('login')">تسجيل الدخول</button>
+      <button class="auth-tab-btn" id="tabRegisterBtn" onclick="switchAuthMode('register')">إنشاء حساب جديد</button>
     </div>
-    <h2 style="font-size:24px; font-weight:800; margin-bottom:6px;">مرحباً بك في السكرم</h2>
-    <p style="color:var(--text-lo); font-size:13px; margin-bottom:20px;">سجل دخولك المباشر للمشاركة وحجز المقاعد.</p>
 
-    <!-- الدخول المباشر السريع (للهوتميل وأي بريد أو اسم) -->
-    <div class="f-group">
-      <label>البريد الإلكتروني (Hotmail / Gmail / غيره) أو اسم اللاعب</label>
+    <h2 id="authTitle" style="font-size:22px; font-weight:800; margin-bottom:6px;">تسجيل الدخول للمنصة</h2>
+    <p id="authSub" style="color:var(--text-lo); font-size:13px; margin-bottom:20px;">أدخل بياناتك للمتابعة وحجز مقعد فريقك.</p>
+
+    <!-- حقل الاسم (يظهر فقط في إنشاء الحساب) -->
+    <div class="f-group hidden" id="nameFieldGroup">
+      <label>اسم اللاعب (داخل اللعبة)</label>
       <div class="f-input-wrap">
-        <input type="text" id="directIdentifierInput" placeholder="name@hotmail.com / اسمك">
+        <input type="text" id="authPlayerName" placeholder="اكتب اسمك">
       </div>
     </div>
 
-    <button class="btn btn-primary btn-block" id="directLoginBtn" onclick="handleDirectLogin()">
-      <i class="fa-solid fa-right-to-bracket"></i>
-      <span>دخول سريع للمنصة</span>
+    <!-- حقل البريد الإلكتروني -->
+    <div class="f-group">
+      <label>البريد الإلكتروني (Gmail / Hotmail / وغيره)</label>
+      <div class="f-input-wrap">
+        <input type="email" id="authEmail" placeholder="name@example.com">
+      </div>
+    </div>
+
+    <!-- حقل كلمة المرور -->
+    <div class="f-group">
+      <label>كلمة المرور</label>
+      <div class="f-input-wrap">
+        <input type="password" id="authPassword" placeholder="••••••••">
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" id="authSubmitBtn" onclick="handleEmailAuth()">
+      <span id="authBtnText">دخول للمنصة</span>
     </button>
 
-    <div class="divider-text">أو الدخول السريع عبر</div>
+    <div class="divider-text">أو المتابعة السريعة عبر</div>
 
     <!-- زر Google -->
     <button type="button" class="google-btn-auth" onclick="loginWithGoogle()">
       <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5 13.2 4.5 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.4-.3-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 18.9 13 24 13c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5c-7.7 0-14.3 4.4-17.7 10.2z"/><path fill="#4CAF50" d="M24 43.5c5.2 0 9.9-1.8 13.5-4.9l-6.2-5.2C29.2 35 26.7 35.9 24 35.9c-5.3 0-9.7-3.6-11.3-8.5l-6.5 5C9.6 39 16.3 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.4l6.2 5.2C40.6 36.4 43.5 30.7 43.5 24c0-1.2-.1-2.4-.3-3.5z"/></svg>
-      المتابعة بحساب Google
+      حساب Google
     </button>
   </div>
 </div>
@@ -529,6 +552,8 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+let authMode = "login"; // "login" أو "register"
+
 /* الحالة العامة */
 const state = {
   user: null,
@@ -563,32 +588,64 @@ function toast(msg, type='info'){
   });
 })();
 
-/* 3. الدخول المباشر (Hotmail / الاسم / أي إيميل) */
-async function handleDirectLogin(){
-  const val = $('directIdentifierInput').value.trim();
-  if(!val){
-    return toast('يرجى كتابة البريد الإلكتروني أو اسمك', 'err');
-  }
-
-  $('directLoginBtn').disabled = true;
-  $('directLoginBtn').innerText = 'جاري تسجيل الدخول...';
-
-  try {
-    const cred = await auth.signInAnonymously();
-    const isEmail = val.includes('@');
-    const defaultName = isEmail ? val.split('@')[0] : val;
-    const userEmail = isEmail ? val : '';
-
-    await saveUserProfile(cred.user.uid, defaultName, userEmail);
-    toast('تم الدخول بنجاح! أهلاً بك يا بطل', 'ok');
-  } catch(e) {
-    toast('حدث خطأ أثناء الدخول: ' + e.message, 'err');
-    $('directLoginBtn').disabled = false;
-    $('directLoginBtn').innerText = 'دخول سريع للمنصة';
+/* 3. تبديل الوضع بين تسجيل الدخول وإنشاء الحساب */
+function switchAuthMode(mode){
+  authMode = mode;
+  if(mode === 'login'){
+    $('tabLoginBtn').classList.add('active');
+    $('tabRegisterBtn').classList.remove('active');
+    $('authTitle').innerText = 'تسجيل الدخول للمنصة';
+    $('authSub').innerText = 'أدخل بياناتك للمتابعة وحجز مقعد فريقك.';
+    $('authBtnText').innerText = 'دخول للمنصة';
+    hide($('nameFieldGroup'));
+  } else {
+    $('tabRegisterBtn').classList.add('active');
+    $('tabLoginBtn').classList.remove('active');
+    $('authTitle').innerText = 'إنشاء حساب جديد';
+    $('authSub').innerText = 'أنشئ حسابك للمشاركة في منافسات البطولة.';
+    $('authBtnText').innerText = 'إنشاء الحساب والمتابعة';
+    show($('nameFieldGroup'));
   }
 }
 
-/* 4. الدخول المباشر عبر Google */
+/* 4. المصادقة عبر البريد وكلمة المرور */
+async function handleEmailAuth(){
+  const email = $('authEmail').value.trim();
+  const password = $('authPassword').value.trim();
+  const playerName = $('authPlayerName').value.trim();
+
+  if(!email || !email.includes('@')){
+    return toast('يرجى كتابة بريد إلكتروني صحيح', 'err');
+  }
+  if(password.length < 6){
+    return toast('كلمة المرور يجب أن تكون 6 خانات على الأقل', 'err');
+  }
+
+  $('authSubmitBtn').disabled = true;
+
+  try {
+    if(authMode === 'register'){
+      if(!playerName){
+        $('authSubmitBtn').disabled = false;
+        return toast('يرجى كتابة اسم اللاعب', 'err');
+      }
+      const cred = await auth.createUserWithEmailAndPassword(email, password);
+      await saveUserProfile(cred.user.uid, playerName, email);
+      toast('تم إنشاء الحساب بنجاح!', 'ok');
+    } else {
+      await auth.signInWithEmailAndPassword(email, password);
+      toast('تم تسجيل الدخول بنجاح!', 'ok');
+    }
+  } catch(error) {
+    let msg = error.message;
+    if(error.code === 'auth/email-already-in-use') msg = 'البريد مسجل مسبقاً، يرجى تسجيل الدخول.';
+    if(error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') msg = 'البريد أو كلمة المرور غير صحيحة.';
+    toast(msg, 'err');
+    $('authSubmitBtn').disabled = false;
+  }
+}
+
+/* 5. الدخول المباشر عبر Google */
 async function loginWithGoogle(){
   try{
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -602,7 +659,7 @@ async function loginWithGoogle(){
   }
 }
 
-/* 5. إدارة المستخدمين وتحديد رتبة الأدمن */
+/* 6. إدارة المستخدمين وتحديد رتبة الأدمن */
 async function saveUserProfile(uid, defaultName, email=''){
   const docRef = db.collection('users').doc(uid);
   const snap = await docRef.get();
@@ -635,8 +692,8 @@ auth.onAuthStateChanged(async (user)=>{
       state.profile = { name: user.displayName || 'لاعب', discord: '', platform: 'PC', role: 'PLAYER' };
     }
 
-    // التحقق من حساب الأدمن
-    const userEmail = (user.email || state.profile.email || $('directIdentifierInput').value || '').toLowerCase().trim();
+    // التحقق من صلاحية الأدمن
+    const userEmail = (user.email || state.profile.email || '').toLowerCase().trim();
     const isAdminAccount = userEmail === ADMIN_EMAIL.toLowerCase() || state.profile.role === 'ADMIN';
 
     if(isAdminAccount){
@@ -663,6 +720,7 @@ auth.onAuthStateChanged(async (user)=>{
     hide($('adminOverlay'));
     hide($('adminPanelBtn'));
     state.isAdmin = false;
+    $('authSubmitBtn').disabled = false;
   }
 });
 
@@ -706,7 +764,7 @@ function logout(){
   auth.signOut(); 
 }
 
-/* 6. المزامنة اللحظية (Firestore Realtime) */
+/* 7. المزامنة اللحظية (Firestore Realtime) */
 function startSync(){
   db.collection('config').doc('lobby').onSnapshot((doc)=>{
     if(doc.exists){
@@ -739,7 +797,7 @@ function copyPartyCode(){
   }
 }
 
-/* 7. رسم الفرق وحجز المقاعد */
+/* 8. رسم الفرق وحجز المقاعد */
 function renderGrid(){
   const grid = $('teamsGrid');
   grid.innerHTML = '';
@@ -826,7 +884,7 @@ async function leaveTeam(teamId, slotIndex){
   toast('تمت المغادرة', 'ok');
 }
 
-/* 8. لوحة تحكم الأدمن المباشرة */
+/* 9. لوحة تحكم الأدمن المباشرة */
 $('adminPanelBtn').addEventListener('click', ()=>{
   if(state.isAdmin){
     show($('adminOverlay'));
