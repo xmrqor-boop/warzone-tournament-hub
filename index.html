@@ -101,7 +101,7 @@ a{ color:inherit; text-decoration:none; }
   font-family:var(--font-display); font-weight:700;
 }
 
-/* ================= AUTH SCREEN (FORM V3 ARABIC) ================= */
+/* ================= AUTH SCREEN ================= */
 .auth-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
 .auth-card-v3{
   width:100%; max-width:860px; min-height:500px;
@@ -130,14 +130,14 @@ a{ color:inherit; text-decoration:none; }
 .f-icon-valid{ position:absolute; left:14px; color:var(--neon-green); display:none; }
 
 /* OTP Box Area */
-.otp-container{ display:flex; justify-content:center; gap:10px; margin:20px 0 10px; direction:ltr; }
+.otp-container{ display:flex; justify-content:center; gap:12px; margin:20px 0 10px; direction:ltr; }
 .otp-box{
-  width: 44px;
-  height: 56px;
-  border-radius: 10px;
+  width: 50px;
+  height: 60px;
+  border-radius: 12px;
   background: #06080e;
   border: 1.5px solid rgba(255,255,255,0.15);
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 800;
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: var(--accent);
@@ -195,7 +195,7 @@ a{ color:inherit; text-decoration:none; }
   display:flex; align-items:center; gap:10px; background:rgba(0,0,0,0.35);
   padding:6px 14px; border-radius:30px; border:1px solid rgba(255,255,255,0.1); cursor:pointer;
 }
-.user-avatar{ width:34px; height:34px; border-radius:50%; background:var(--accent-dim); display:flex; align-items:center; justify-content:center; font-weight:900; color:#fff; }
+.user-avatar{ width:34px; height:34px; border-radius:50%; background:#1e293b; display:flex; align-items:center; justify-content:center; font-weight:900; color:#fff; }
 .platform-icon{ font-size:12px; color:var(--accent); }
 
 /* Party Code Banner */
@@ -335,31 +335,30 @@ a{ color:inherit; text-decoration:none; }
   </div>
 </div>
 
-<!-- ================= 2. AUTH SCREEN (FORM V3 ARABIC + GOOGLE + APPLE + OTP) ================= -->
+<!-- ================= 2. AUTH SCREEN ================= -->
 <div class="auth-wrap hidden" id="authScreen">
   <div class="auth-card-v3">
     
-    <!-- الجانب الأيمن (عربي): النموذج التفاعلي -->
+    <!-- الجانب الأيمن: نموذج الدخول والـ OTP -->
     <div class="auth-form-side">
-      <h2 id="v3FormTitle"> مرحباً بك</h2>
-      <p id="v3FormSub">أنشئ حسابك الجديد للمشاركة في السكرم والجوائز.</p>
+      <h2 id="v3FormTitle">مرحباً بك</h2>
+      <p id="v3FormSub">سجل دخولك للمشاركة في منافسات البطولة والسكريمات.</p>
 
-      <!-- المرحلة الأولى: إدخال الإيميل/الجوال -->
+      <!-- المرحلة الأولى: إدخال الإيميل -->
       <div id="authInputPhase">
         <div class="f-group">
-          <label>البريد الإلكتروني أو رقم الهاتف</label>
+          <label>البريد الإلكتروني</label>
           <div class="f-input-wrap">
-            <input type="text" id="mainIdentifier" placeholder="name@example.com / +9665..." oninput="checkIdentifier()">
+            <input type="email" id="mainIdentifier" placeholder="name@example.com" oninput="checkIdentifier()">
             <i class="fa-solid fa-circle-check f-icon-valid" id="idCheckIcon"></i>
           </div>
         </div>
 
         <button class="btn btn-primary btn-block" id="submitInitBtn" onclick="startVerificationFlow()">
-          <i class="fa-solid fa-shield-halved"></i>
-          <span id="submitInitText">بدء التحقق والمتابعة</span>
+          <i class="fa-solid fa-paper-plane"></i>
+          <span id="submitInitText">إرسال رمز التحقق (OTP)</span>
         </button>
 
-        <!-- أزرار Google و Apple السريعة جنب بعض -->
         <div class="quick-auth-grid">
           <button type="button" class="social-v3-btn" onclick="loginWithGoogle()">
             <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5 13.2 4.5 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.4-.3-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 18.9 13 24 13c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5c-7.7 0-14.3 4.4-17.7 10.2z"/><path fill="#4CAF50" d="M24 43.5c5.2 0 9.9-1.8 13.5-4.9l-6.2-5.2C29.2 35 26.7 35.9 24 35.9c-5.3 0-9.7-3.6-11.3-8.5l-6.5 5C9.6 39 16.3 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.4l6.2 5.2C40.6 36.4 43.5 30.7 43.5 24c0-1.2-.1-2.4-.3-3.5z"/></svg>
@@ -372,24 +371,23 @@ a{ color:inherit; text-decoration:none; }
         </div>
       </div>
 
-      <!-- المرحلة الثانية: مربعات الـ OTP -->
+      <!-- المرحلة الثانية: مربعات الـ OTP (4 أرقام) -->
       <div id="authOtpPhase" class="hidden">
         <div class="otp-container">
-  <input type="text" maxlength="1" class="otp-box" id="otpBox1" oninput="handleBoxInput(1)" onkeydown="handleBoxKey(event, 1)">
-  <input type="text" maxlength="1" class="otp-box" id="otpBox2" oninput="handleBoxInput(2)" onkeydown="handleBoxKey(event, 2)">
-  <input type="text" maxlength="1" class="otp-box" id="otpBox3" oninput="handleBoxInput(3)" onkeydown="handleBoxKey(event, 3)">
-  <input type="text" maxlength="1" class="otp-box" id="otpBox4" oninput="handleBoxInput(4)" onkeydown="handleBoxKey(event, 4)">
-  <input type="text" maxlength="1" class="otp-box" id="otpBox5" oninput="handleBoxInput(5)" onkeydown="handleBoxKey(event, 5)">
-  <input type="text" maxlength="1" class="otp-box" id="otpBox6" oninput="handleBoxInput(6)" onkeydown="handleBoxKey(event, 6)">
-</div>
+          <input type="text" maxlength="1" class="otp-box" id="otpBox1" oninput="handleBoxInput(1)" onkeydown="handleBoxKey(event, 1)">
+          <input type="text" maxlength="1" class="otp-box" id="otpBox2" oninput="handleBoxInput(2)" onkeydown="handleBoxKey(event, 2)">
+          <input type="text" maxlength="1" class="otp-box" id="otpBox3" oninput="handleBoxInput(3)" onkeydown="handleBoxKey(event, 3)">
+          <input type="text" maxlength="1" class="otp-box" id="otpBox4" oninput="handleBoxInput(4)" onkeydown="handleBoxKey(event, 4)">
+        </div>
         <p style="text-align:center; font-size:12px; color:var(--text-lo); margin-top:8px;">
+          تم إرسال رمز التحقق إلى بريدك الإلكتروني.
         </p>
-        <button class="btn btn-ghost btn-block" style="margin-top:12px;" onclick="backToInputPhase()">تعديل البريد / الرقم</button>
+        <button class="btn btn-ghost btn-block" style="margin-top:12px;" onclick="backToInputPhase()">تعديل البريد</button>
       </div>
 
     </div>
 
-    <!-- الجانب الأيسر: مؤشر الحماية والخطوات المتحركة (معربة) -->
+    <!-- الجانب الأيسر: مؤشر الحماية -->
     <div class="auth-security-side">
       <div class="lock-shield pulse" id="v3LockShield">
         <i class="fa-solid fa-lock" id="v3LockIcon"></i>
@@ -398,11 +396,11 @@ a{ color:inherit; text-decoration:none; }
       <div class="auth-steps-list">
         <div class="auth-step" id="v3Step1">
           <i class="fa-regular fa-circle"></i>
-          <span>التحقق من البيانات</span>
+          <span>التحقق من البريد</span>
         </div>
         <div class="auth-step" id="v3Step2">
           <i class="fa-regular fa-circle"></i>
-          <span>الفحص الأمني (OTP)</span>
+          <span>رمز التحقق (OTP)</span>
         </div>
         <div class="auth-step" id="v3Step3">
           <i class="fa-regular fa-circle"></i>
@@ -434,15 +432,15 @@ a{ color:inherit; text-decoration:none; }
           <i class="fa-solid fa-chevron-down" style="font-size:10px; color:var(--text-lo);"></i>
         </div>
         
-        <!-- زر لوحة الإدارة (مخفي افتراضياً ولا يظهر إلا للأدمن فقط) -->
-        <button class="btn btn-ghost hidden" id="adminPanelBtn" title="لوحة المنظم"><i class="fa-solid fa-gear"></i></button>
+        <!-- زر لوحة تحكم المنظم (يظهر للأدمن فقط) -->
+        <button class="btn btn-ghost hidden" id="adminPanelBtn" title="لوحة المنظم" style="color:var(--gold); border-color:rgba(255,215,0,0.3);"><i class="fa-solid fa-crown"></i> لوحة الأدمن</button>
         
         <button class="btn btn-ghost" onclick="logout()" title="خروج" style="color:var(--danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
       </div>
     </div>
   </header>
 
-  <!-- كود الروم الخاص بالبطولة -->
+  <!-- كود الروم -->
   <section class="party-code-section">
     <div style="font-size:14px; font-weight:700; color:var(--neon-green); margin-bottom:6px;">
       <i class="fa-solid fa-satellite-dish"></i> كود الروم المباشر (Private Match Code)
@@ -454,7 +452,7 @@ a{ color:inherit; text-decoration:none; }
     <p style="font-size:12px; color:var(--text-lo);">يتم إدخال هذا الكود داخل اللعبة للانضمام للروم فور فتحه من قبل المنظم</p>
   </section>
 
-  <!-- الجوائز ولوحة الشرف والديسكورد -->
+  <!-- الجوائز والديسكورد -->
   <section class="showcase-grid">
     <div class="glass showcase-card">
       <h3 style="color:var(--gold); font-size:16px;"><i class="fa-solid fa-trophy"></i> مجموع الجوائز والمراكز</h3>
@@ -491,7 +489,7 @@ a{ color:inherit; text-decoration:none; }
   </main>
 </div>
 
-<!-- ================= 4. PROFILE & EDIT MODAL ================= -->
+<!-- ================= 4. PROFILE MODAL ================= -->
 <div class="overlay hidden" id="profileOverlay">
   <div class="glass profile-modal-card">
     <div class="user-avatar" id="modalAvatar" style="width:60px; height:60px; font-size:22px; margin:0 auto 12px;">?</div>
@@ -524,7 +522,7 @@ a{ color:inherit; text-decoration:none; }
 <div class="overlay hidden" id="adminOverlay" style="align-items:flex-start;">
   <div class="glass admin-card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-      <h2 style="color:var(--gold);"><i class="fa-solid fa-crown"></i> لوحة تحكم المنظم</h2>
+      <h2 style="color:var(--gold);"><i class="fa-solid fa-crown"></i> لوحة تحكم المنظم (Admin)</h2>
       <button class="btn btn-ghost" onclick="hide($('adminOverlay'))">✕</button>
     </div>
 
@@ -559,7 +557,7 @@ a{ color:inherit; text-decoration:none; }
     </div>
 
     <!-- قائمة اللاعبين والطرد -->
-    <h4 style="color:var(--text-lo); margin-bottom:8px;">إدارة اللاعبين المسجلين ومعرفات الديسكورد</h4>
+    <h4 style="color:var(--text-lo); margin-bottom:8px;">إدارة اللاعبين المسجلين</h4>
     <div class="admin-team-list" id="adminTeamList" style="display:flex; flex-direction:column; gap:8px; max-height:220px; overflow-y:auto;"></div>
   </div>
 </div>
@@ -599,6 +597,12 @@ a{ color:inherit; text-decoration:none; }
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
+// تهيئة EmailJS بالمفتاح العام
+emailjs.init("_h5sg42eN9meEft9t");
+
+// الإيميل المعتمد للأدمن
+const ADMIN_EMAIL = "xmr.qor@gmail.com";
+
 /* 1. إعدادات Firebase */
 const firebaseConfig = {
   apiKey: "AIzaSyBo4jmmvxrjkXVWk6qnxh6pFIqZdUwcgKY",
@@ -613,6 +617,8 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+let generatedOtp = "";
+
 /* الحالة العامة */
 const state = {
   user: null,
@@ -623,8 +629,8 @@ const state = {
 };
 
 function $(id){ return document.getElementById(id); }
-function show(el){ el.classList.remove('hidden'); }
-function hide(el){ el.classList.add('hidden'); }
+function show(el){ if(el) el.classList.remove('hidden'); }
+function hide(el){ if(el) el.classList.add('hidden'); }
 function slotCapacity(){ return state.config.format === 'quads' ? 4 : 3; }
 
 function toast(msg, type='info'){
@@ -647,11 +653,11 @@ function toast(msg, type='info'){
   });
 })();
 
-/* 3. تدفق المصادقة التفاعلي المعرب (Form V3 Steps & OTP) */
+/* 3. تدفق المصادقة عبر OTP و EmailJS */
 function checkIdentifier(){
   const val = $('mainIdentifier').value.trim();
   const icon = $('idCheckIcon');
-  if(val.includes('@') || val.length >= 9){
+  if(val.includes('@')){
     icon.style.display = 'block';
   } else {
     icon.style.display = 'none';
@@ -660,6 +666,7 @@ function checkIdentifier(){
 
 function setV3Step(id, status){
   const el = $(id);
+  if(!el) return;
   const icon = el.querySelector('i');
   if(status === 'active'){
     el.className = 'auth-step active';
@@ -671,40 +678,56 @@ function setV3Step(id, status){
 }
 
 async function startVerificationFlow(){
-  const val = $('mainIdentifier').value.trim();
-  if(!val){ return toast('يرجى كتابة البريد أو رقم الجوال', 'err'); }
+  const emailInput = $('mainIdentifier').value.trim();
+  if(!emailInput || !emailInput.includes('@')){ 
+    return toast('يرجى كتابة بريد إلكتروني صحيح!', 'err'); 
+  }
 
   $('submitInitBtn').disabled = true;
-  $('submitInitText').innerText = 'جاري التحقق...';
+  $('submitInitText').innerText = 'جاري إرسال الرمز...';
 
-  // Step 1: Credentials
   setV3Step('v3Step1', 'active');
-  await new Promise(r => setTimeout(r, 450));
-  setV3Step('v3Step1', 'completed');
 
-  // الانتقال للـ OTP و Step 2
-  setV3Step('v3Step2', 'active');
-  hide($('authInputPhase'));
-  show($('authOtpPhase'));
-  $('v3FormTitle').innerText = "تأكيد الحساب";
-  $('v3FormSub').innerText = "أدخل رمز التحقق المكون من 6 أرقام للمتابعة.";
-  $('otpBox1').focus();
+  // توليد رمز OTP من 4 أرقام
+  generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+
+  try {
+    await emailjs.send("service_5c5l4mp", "template_mb60klx", {
+      to_email: emailInput,
+      otp_code: generatedOtp
+    });
+
+    setV3Step('v3Step1', 'completed');
+    setV3Step('v3Step2', 'active');
+    
+    hide($('authInputPhase'));
+    show($('authOtpPhase'));
+    $('v3FormTitle').innerText = "تأكيد الرمز";
+    $('v3FormSub').innerText = "أدخل رمز التحقق المرسل لبريدك الإلكتروني.";
+    $('otpBox1').focus();
+    toast('تم إرسال رمز التحقق إلى بريدك بنجاح!', 'ok');
+  } catch(error) {
+    console.error("فشل إرسال الإيميل:", error);
+    toast('تعذر إرسال الإيميل، تأكد من الاتصال وحاول مجدداً', 'err');
+    $('submitInitBtn').disabled = false;
+    $('submitInitText').innerText = 'إرسال رمز التحقق (OTP)';
+  }
 }
 
 function backToInputPhase(){
   show($('authInputPhase'));
   hide($('authOtpPhase'));
-  $('v3FormTitle').innerText = "مرحباً بك مجدداً";
-  $('v3FormSub').innerText = "سجل دخولك للمشاركة في منافسات البطولة.";
+  $('v3FormTitle').innerText = "مرحباً بك";
+  $('v3FormSub').innerText = "سجل دخولك للمشاركة في منافسات البطولة والسكريمات.";
   $('submitInitBtn').disabled = false;
-  $('submitInitText').innerText = 'بدء التحقق والمتابعة';
+  $('submitInitText').innerText = 'إرسال رمز التحقق (OTP)';
 }
 
 function handleBoxInput(idx){
   const box = $('otpBox' + idx);
   if(box.value.length === 1){
     box.classList.add('filled');
-    if(idx < 6){
+    if(idx < 4){
       $('otpBox' + (idx + 1)).focus();
     } else {
       finalizeV3Auth();
@@ -719,26 +742,37 @@ function handleBoxKey(e, idx){
 }
 
 async function finalizeV3Auth(){
+  const enteredCode = `${$('otpBox1').value}${$('otpBox2').value}${$('otpBox3').value}${$('otpBox4').value}`.trim();
+
+  if(enteredCode !== generatedOtp && enteredCode !== "2580"){
+    toast('رمز التحقق غير صحيح، يرجى المحاولة مرة أخرى', 'err');
+    for(let i=1; i<=4; i++){
+      $('otpBox'+i).value = '';
+      $('otpBox'+i).classList.remove('filled');
+    }
+    $('otpBox1').focus();
+    return;
+  }
+
   setV3Step('v3Step2', 'completed');
-
   setV3Step('v3Step3', 'active');
-  await new Promise(r => setTimeout(r, 450));
-  setV3Step('v3Step3', 'completed');
-
+  
   const lock = $('v3LockShield');
   const icon = $('v3LockIcon');
   lock.classList.add('success');
   icon.className = 'fa-solid fa-check';
 
-  await new Promise(r => setTimeout(r, 350));
+  await new Promise(r => setTimeout(r, 400));
+  setV3Step('v3Step3', 'completed');
 
   try{
+    const emailInput = $('mainIdentifier').value.trim();
     const cred = await auth.signInAnonymously();
-    const identifier = $('mainIdentifier').value.trim() || 'لاعب سكرم';
-    await saveUserProfile(cred.user.uid, identifier);
-    toast('تمت المصادقة بنجاح!', 'ok');
+    const defaultName = emailInput.split('@')[0];
+    await saveUserProfile(cred.user.uid, defaultName, emailInput);
+    toast('تم تسجيل الدخول بنجاح!', 'ok');
   }catch(e){
-    toast('حدث خطأ أثناء المصادقة', 'err');
+    toast('حدث خطأ أثناء إتمام الدخول', 'err');
   }
 }
 
@@ -749,7 +783,7 @@ async function loginWithGoogle(){
     setV3Step('v3Step1', 'completed');
     setV3Step('v3Step2', 'completed');
     setV3Step('v3Step3', 'completed');
-    await saveUserProfile(cred.user.uid, cred.user.displayName || cred.user.email.split('@')[0]);
+    await saveUserProfile(cred.user.uid, cred.user.displayName || cred.user.email.split('@')[0], cred.user.email);
     toast('تم تسجيل الدخول عبر Google', 'ok');
   }catch(e){ toast(e.message, 'err'); }
 }
@@ -764,7 +798,7 @@ async function loginWithApple(){
     setV3Step('v3Step1', 'completed');
     setV3Step('v3Step2', 'completed');
     setV3Step('v3Step3', 'completed');
-    await saveUserProfile(cred.user.uid, cred.user.displayName || (cred.user.email ? cred.user.email.split('@')[0] : 'لاعب Apple'));
+    await saveUserProfile(cred.user.uid, cred.user.displayName || (cred.user.email ? cred.user.email.split('@')[0] : 'لاعب Apple'), cred.user.email);
     toast('تم تسجيل الدخول عبر Apple ID', 'ok');
   }catch(e){
     if(e.code === 'auth/operation-not-allowed' || e.code === 'auth/configuration-not-found'){
@@ -775,17 +809,22 @@ async function loginWithApple(){
   }
 }
 
-/* 4. إدارة البروفايل وصلاحيات الأدمن الصارمة */
-async function saveUserProfile(uid, defaultName){
+/* 4. إدارة المستخدمين وتحديد رتبة الأدمن */
+async function saveUserProfile(uid, defaultName, email=''){
   const docRef = db.collection('users').doc(uid);
   const snap = await docRef.get();
+  const isAdmin = email && email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+
   if(!snap.exists){
     await docRef.set({
       name: defaultName,
+      email: email,
       discord: '',
       platform: 'PC',
-      role: (defaultName.toLowerCase().includes('hannibal') || defaultName.toLowerCase().includes('admin')) ? 'ADMIN' : 'PLAYER'
+      role: isAdmin ? 'ADMIN' : 'PLAYER'
     });
+  } else if (isAdmin) {
+    await docRef.set({ role: 'ADMIN', email: email }, { merge: true });
   }
 }
 
@@ -803,20 +842,22 @@ auth.onAuthStateChanged(async (user)=>{
       state.profile = { name: user.displayName || 'لاعب', discord: '', platform: 'PC', role: 'PLAYER' };
     }
 
-    // التحقق الصارم من حساب الأدمن:
-    const userEmail = (user.email || '').toLowerCase();
-    const isAdminAccount = userEmail.includes('hannibal') || userEmail.includes('admin') || state.profile.role === 'ADMIN';
+    // التحقق من حساب الأدمن
+    const userEmail = (user.email || state.profile.email || $('mainIdentifier').value || '').toLowerCase().trim();
+    const isAdminAccount = userEmail === ADMIN_EMAIL.toLowerCase() || state.profile.role === 'ADMIN';
 
     if(isAdminAccount){
       state.isAdmin = true;
+      localStorage.setItem("userRole", "admin");
       $('hudUserRole').textContent = '👑 ADMIN';
       $('hudUserRole').style.color = 'var(--gold)';
-      show($('adminPanelBtn')); // يظهر زر الإدارة هنا فقط لحساب الأدمن
+      show($('adminPanelBtn'));
     } else {
       state.isAdmin = false;
+      localStorage.setItem("userRole", "player");
       $('hudUserRole').textContent = 'PLAYER';
       $('hudUserRole').style.color = 'var(--accent)';
-      hide($('adminPanelBtn')); // يظل مخفياً تماماً عن أي لاعب عادي
+      hide($('adminPanelBtn'));
     }
 
     $('hudUserName').textContent = state.profile.name;
@@ -867,7 +908,10 @@ async function saveProfileChanges(){
   toast('تم حفظ بيانات البروفايل', 'ok');
 }
 
-function logout(){ auth.signOut(); }
+function logout(){ 
+  localStorage.removeItem("userRole");
+  auth.signOut(); 
+}
 
 /* 5. المزامنة اللحظية (Firestore Realtime) */
 function startSync(){
@@ -989,7 +1033,7 @@ async function leaveTeam(teamId, slotIndex){
   toast('تمت المغادرة', 'ok');
 }
 
-/* 7. لوحة تحكم الأدمن المباشرة (للأدمن فقط) */
+/* 7. لوحة تحكم الأدمن المباشرة */
 $('adminPanelBtn').addEventListener('click', ()=>{
   if(state.isAdmin){
     show($('adminOverlay'));
@@ -1057,84 +1101,6 @@ async function adminKick(teamId, slotIndex){
   await ref.update({ slots });
   toast('تم طرد اللاعب', 'ok');
 }
-  // تفعيل EmailJS
-emailjs.init("_h5sg42eN9meEft9t");
-
-let generatedOtp = "";
-
-// إرسال كود OTP للإيميل
-function sendEmailOtp() {
-  const emailInput = document.getElementById("auth-input") ? document.getElementById("auth-input").value.trim() : "";
-  
-  if (!emailInput || !emailInput.includes("@")) {
-    alert("يرجى إدخال بريد إلكتروني صحيح!");
-    return;
-  }
-
-  generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
-
-  emailjs.send("service_5c5l4mp", "template_mb60klx", {
-    to_email: emailInput,
-    otp_code: generatedOtp
-  })
-  .then(() => {
-    alert("تم إرسال كود التحقق بنجاح إلى إيميلك! تفقد الوارد أو الـ Spam.");
-    // إظهار خانة إدخال الـ OTP
-    if(document.getElementById("otp-screen")) {
-      document.getElementById("login-screen").classList.add("hidden");
-      document.getElementById("otp-screen").classList.remove("hidden");
-    }
-  })
-  .catch((error) => {
-    console.error("خطأ بالإرسال:", error);
-    alert("حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.");
-  });
-}
-
-// تأكيد كود OTP
-function verifyOtp() {
-  const enteredOtp = document.getElementById("otp-input") ? document.getElementById("otp-input").value.trim() : "";
-  
-  if (enteredOtp === generatedOtp || enteredOtp === "2580") {
-    alert("تم تسجيل الدخول بنجاح!");
-    location.reload();
-  } else {
-    alert("كود التحقق غير صحيح، تأكد من الرمز وحاول مجدداً.");
-  }
-}
-const ADMIN_EMAIL = "xmr.qor@gmail.com";
-
-// فحص المستخدم فور تسجيل الدخول
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    const userEmail = (user.email || "").toLowerCase().trim();
-    console.log("Logged in user:", userEmail);
-
-    if (userEmail === ADMIN_EMAIL.toLowerCase()) {
-      localStorage.setItem("userRole", "admin");
-      
-      // إظهار أي عنصر خاص بالأدمن في الصفحة
-      const adminElements = [
-        document.getElementById("admin-panel"),
-        document.getElementById("adminSection"),
-        document.getElementById("adminTab"),
-        document.getElementById("adminControls")
-      ];
-
-      adminElements.forEach(el => {
-        if (el) el.style.display = "block";
-      });
-
-      document.querySelectorAll(".admin-only").forEach(el => {
-        el.style.display = "block";
-      });
-
-      alert("مرحباً يا كابتن! تم التعرف على حسابك كأدمن 👑");
-    } else {
-      localStorage.setItem("userRole", "player");
-    }
-  }
-});
 </script>
 </body>
 </html>
