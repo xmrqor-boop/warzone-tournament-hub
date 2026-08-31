@@ -692,10 +692,10 @@ async function startVerificationFlow(){
   generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
   try {
-    await emailjs.send("service_e2wy7vk", "lohovon", { 
-      to_email: emailInput,
-      otp_code: generatedOtp
-    });
+    await emailjs.send("service_e2wy7vk", "template_mb60klx", {
+  to_email: emailInput,
+  otp_code: generatedOtp
+});
 
     setV3Step('v3Step1', 'completed');
     setV3Step('v3Step2', 'active');
