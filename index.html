@@ -692,7 +692,7 @@ async function startVerificationFlow(){
   generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
 
   try {
-    await emailjs.send("service_e2wy7vk", "template_mb60klx", {
+    await emailjs.send("service_e2wy7vk", "lohovon", { 
       to_email: emailInput,
       otp_code: generatedOtp
     });
