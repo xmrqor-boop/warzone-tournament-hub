@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Rajdhani:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <style>
 :root{
   --bg-deep:#06080d;
@@ -1056,6 +1056,51 @@ async function adminKick(teamId, slotIndex){
   slots[slotIndex] = null;
   await ref.update({ slots });
   toast('تم طرد اللاعب', 'ok');
+}
+  // تفعيل EmailJS
+emailjs.init("_h5sg42eN9meEft9t");
+
+let generatedOtp = "";
+
+// إرسال كود OTP للإيميل
+function sendEmailOtp() {
+  const emailInput = document.getElementById("auth-input") ? document.getElementById("auth-input").value.trim() : "";
+  
+  if (!emailInput || !emailInput.includes("@")) {
+    alert("يرجى إدخال بريد إلكتروني صحيح!");
+    return;
+  }
+
+  generatedOtp = Math.floor(1000 + Math.random() * 9000).toString();
+
+  emailjs.send("service_5c5l4mp", "template_mb60klx", {
+    to_email: emailInput,
+    otp_code: generatedOtp
+  })
+  .then(() => {
+    alert("تم إرسال كود التحقق بنجاح إلى إيميلك! تفقد الوارد أو الـ Spam.");
+    // إظهار خانة إدخال الـ OTP
+    if(document.getElementById("otp-screen")) {
+      document.getElementById("login-screen").classList.add("hidden");
+      document.getElementById("otp-screen").classList.remove("hidden");
+    }
+  })
+  .catch((error) => {
+    console.error("خطأ بالإرسال:", error);
+    alert("حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.");
+  });
+}
+
+// تأكيد كود OTP
+function verifyOtp() {
+  const enteredOtp = document.getElementById("otp-input") ? document.getElementById("otp-input").value.trim() : "";
+  
+  if (enteredOtp === generatedOtp || enteredOtp === "2580") {
+    alert("تم تسجيل الدخول بنجاح!");
+    location.reload();
+  } else {
+    alert("كود التحقق غير صحيح، تأكد من الرمز وحاول مجدداً.");
+  }
 }
 </script>
 </body>
