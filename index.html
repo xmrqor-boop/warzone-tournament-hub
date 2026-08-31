@@ -1102,6 +1102,32 @@ function verifyOtp() {
     alert("كود التحقق غير صحيح، تأكد من الرمز وحاول مجدداً.");
   }
 }
+  // إيميل الأدمن المعتمد
+const ADMIN_EMAIL = "xmr.qor@gmail.com";
+
+// مراقبة حالة تسجيل الدخول عبر Google وتفعيل صلاحيات الأدمن
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    const currentEmail = (user.email || "").toLowerCase().trim();
+    
+    // التحقق من صلاحية الأدمن
+    if (currentEmail === ADMIN_EMAIL.toLowerCase()) {
+      localStorage.setItem("userRole", "admin");
+      console.log("مرحباً بك يا كابتن هانيبال | تم تفعيل رتبة الأدمن 👑");
+
+      // إظهار لوحة تحكم الأدمن
+      const adminPanel = document.getElementById("admin-panel") || document.getElementById("adminSection");
+      if (adminPanel) {
+        adminPanel.classList.remove("hidden");
+      }
+
+      // إظهار أي أزرار أو خيارات مخصصة للأدمن فقط
+      document.querySelectorAll(".admin-only").forEach(el => el.classList.remove("hidden"));
+    } else {
+      localStorage.setItem("userRole", "player");
+    }
+  }
+});
 </script>
 </body>
 </html>
