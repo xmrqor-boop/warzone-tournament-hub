@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>بطولة HANNIBAL الكبرى | Warzone </title>
+
+<!-- Fonts & Icons -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Rajdhani:wght@600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+  --bg-deep:#06080d;
+  --bg-panel:#0f1523;
+  --accent:#00f2fe;
+  --accent-glow:rgba(0, 242, 254, 0.4);
+  --neon-green:#00ff87;
+  --discord-blurple:#5865F2;
+  --gold:#ffd700;
+  --danger:#ff4d5e;
+  --text-hi:#f8fafc;
+  --text-lo:#94a3b8;
+  --glass:rgba(15, 21, 35, 0.78);
+  --border-glow:rgba(0, 242, 254, 0.25);
+  --radius:16px;
+  --font-display:'Rajdhani','Cairo',sans-serif;
+  --font-body:'Cairo',sans-serif;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ min-height:100%; }
+body{
+  background:
+    radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.08), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(0, 255, 135, 0.06), transparent 50%),
+    var(--bg-deep);
+  color:var(--text-hi);
+  font-family:var(--font-body);
+  overflow-x:hidden;
+  line-height:1.5;
+}
+::selection{ background:var(--accent); color:#000; }
+button{ font-family:inherit; cursor:pointer; border:none; outline:none; }
+input{ font-family:inherit; }
+a{ color:inherit; text-decoration:none; }
+
+::-webkit-scrollbar{ width:6px; height:6px; }
+::-webkit-scrollbar-track{ background:var(--bg-deep); }
+::-webkit-scrollbar-thumb{ background:#1e293b; border-radius:8px; }
+
+.hidden{ display:none !important; }
+.glass{
+  background:var(--glass);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--border-glow);
+  border-radius:var(--radius);
+}
+
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  padding:12px 20px; min-height:46px; border-radius:12px;
+  font-weight:700; font-size:14px; transition:all .25s ease;
+}
+.btn:active{ transform:scale(.96); }
+.btn:disabled{ opacity:.4; cursor:not-allowed; }
+.btn-primary{
+  background:linear-gradient(135deg, var(--accent), var(--neon-green));
+  color:#041014; font-weight:900;
+  box-shadow:0 0 20px var(--accent-glow);
+}
+.btn-primary:hover:not(:disabled){ box-shadow:0 0 30px rgba(0,255,135,0.6); transform:translateY(-2px); }
+.btn-ghost{ background:rgba(255,255,255,0.05); color:var(--text-hi); border:1px solid rgba(255,255,255,0.12); }
+.btn-ghost:hover{ border-color:var(--accent); color:var(--accent); background:rgba(0,242,254,0.1); }
+.btn-gold{ background:linear-gradient(135deg, #ffd700, #ffaa00); color:#1a1300; font-weight:900; box-shadow:0 0 20px rgba(255,215,0,0.35); }
+.btn-danger{ background:linear-gradient(135deg, var(--danger), #991b1b); color:#fff; }
+.btn-discord{ background:var(--discord-blurple); color:#fff; font-weight:700; box-shadow:0 0 15px rgba(88,101,242,0.4); }
+.btn-discord:hover{ background:#4752c4; box-shadow:0 0 25px rgba(88,101,242,0.7); }
+.btn-block{ width:100%; }
+
+/* Toasts */
+.toast-stack{ position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; flex-direction:column; gap:10px; width:min(92vw,420px); }
+.toast{ padding:14px 18px; border-radius:12px; font-size:14px; font-weight:700; animation:toast-in .25s ease; box-shadow:0 10px 30px rgba(0,0,0,0.6); }
+@keyframes toast-in{ from{ opacity:0; transform:translateY(-14px);} to{ opacity:1; transform:translateY(0);} }
+.toast.ok{ background:linear-gradient(135deg,var(--accent),var(--neon-green)); color:#041014; }
+.toast.err{ background:linear-gradient(135deg,var(--danger),#7f1d1d); color:#fff; }
+.toast.info{ background:var(--bg-panel); color:var(--text-hi); border:1px solid var(--border-glow); }
+
+/* ---------- Terms Modal ---------- */
+.overlay{ position:fixed; inset:0; z-index:5000; background:rgba(3,5,9,0.94); display:flex; align-items:center; justify-content:center; padding:18px; }
+.terms-card{ max-width:650px; width:100%; max-height:88vh; overflow-y:auto; padding:28px 24px; }
+.rule{ display:flex; gap:14px; padding:14px 0; border-bottom:1px solid rgba(255,255,255,0.06); }
+.rule:last-of-type{ border-bottom:none; }
+.rule-num{
+  flex:none; width:34px; height:34px; border-radius:8px;
+  background:rgba(0,242,254,0.1); border:1px solid var(--border-glow);
+  color:var(--accent); display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:700;
+}
+
+/* ================= AUTH SCREEN (FORM V3 ARABIC) ================= */
+.auth-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+.auth-card-v3{
+  width:100%; max-width:860px; min-height:500px;
+  background:#0d111a; border:1px solid rgba(0,242,254,0.2);
+  border-radius:24px; box-shadow:0 25px 60px rgba(0,0,0,0.85);
+  display:grid; grid-template-columns:1.1fr 0.9fr; overflow:hidden;
+}
+@media (max-width:820px){
+  .auth-card-v3{ grid-template-columns:1fr; }
+  .auth-security-side{ display:none !important; }
+}
+
+.auth-form-side{ padding:40px; display:flex; flex-direction:column; justify-content:center; text-align:right; }
+.auth-form-side h2{ font-size:24px; font-weight:800; margin-bottom:4px; }
+.auth-form-side p{ color:var(--text-lo); font-size:13px; margin-bottom:24px; }
+
+.f-group{ margin-bottom:16px; position:relative; }
+.f-group label{ display:block; font-size:12px; color:var(--text-lo); margin-bottom:6px; font-weight:600; }
+.f-input-wrap{ position:relative; display:flex; align-items:center; }
+.f-input-wrap input{
+  width:100%; padding:13px 16px; background:#06080e; border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px; color:#fff; font-size:14px; outline:none; transition:.2s ease;
+  direction:ltr; text-align:right;
+}
+.f-input-wrap input:focus{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(0,242,254,0.15); }
+.f-icon-valid{ position:absolute; left:14px; color:var(--neon-green); display:none; }
+
+/* OTP Box Area */
+.otp-container{ display:flex; justify-content:center; gap:10px; margin:20px 0 10px; direction:ltr; }
+.otp-box{
+  width: 44px;
+  height: 56px;
+  border-radius: 10px;
+  background: #06080e;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  font-size: 20px;
+  font-weight: 800;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--accent);
+  text-align: center;
+  outline: none;
+  transition: all .25s ease;
+}
+.otp-box:focus{ border-color:var(--accent); box-shadow:0 0 18px var(--accent-glow); transform:scale(1.05); }
+.otp-box.filled{ border-color:var(--neon-green); color:var(--neon-green); }
+
+.quick-auth-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+.social-v3-btn{
+  width:100%; background:transparent; border:1px solid rgba(255,255,255,0.12);
+  color:#fff; padding:12px; border-radius:12px; font-weight:700; font-size:13px;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  transition:all .2s;
+}
+.social-v3-btn:hover{ background:rgba(255,255,255,0.06); border-color:var(--accent); }
+
+/* Security Right Side */
+.auth-security-side{
+  background:#080b12; border-right:1px solid rgba(255,255,255,0.06);
+  padding:40px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+}
+.lock-shield{
+  width:105px; height:105px; border-radius:50%;
+  background:radial-gradient(circle, rgba(0,242,254,0.18) 0%, rgba(8,11,18,0) 70%);
+  border:1.5px solid var(--border-glow); display:flex; align-items:center; justify-content:center;
+  font-size:32px; color:var(--accent); margin-bottom:36px;
+  box-shadow:0 0 25px rgba(0,242,254,0.2); transition:all .4s ease;
+}
+.lock-shield.pulse{ animation:lockGlow 1.8s infinite alternate; }
+.lock-shield.success{ border-color:var(--neon-green); color:var(--neon-green); box-shadow:0 0 30px rgba(0,255,135,0.5); }
+
+@keyframes lockGlow{
+  0%{ transform:scale(1); box-shadow:0 0 15px rgba(0,242,254,0.2); }
+  100%{ transform:scale(1.06); box-shadow:0 0 35px var(--accent-glow); }
+}
+
+.auth-steps-list{ display:flex; flex-direction:column; gap:16px; width:100%; max-width:230px; font-size:13px; }
+.auth-step{ display:flex; align-items:center; gap:10px; color:#475569; font-weight:600; transition:.3s ease; }
+.auth-step.active{ color:var(--accent); }
+.auth-step.completed{ color:var(--neon-green); }
+
+/* ---------- Main App Shell ---------- */
+.app-shell{ min-height:100vh; display:flex; flex-direction:column; padding-bottom:120px; max-width:1400px; margin:0 auto; width:100%; }
+
+/* HUD Header */
+.hud{ margin:14px; padding:16px 20px; }
+.hud-top{ display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+.hud-brand{ display:flex; align-items:center; gap:12px; }
+.live-dot{ width:10px; height:10px; border-radius:50%; background:var(--neon-green); box-shadow:0 0 12px var(--neon-green); animation:pulse-dot 1.8s infinite; }
+@keyframes pulse-dot{ 0%,100%{ opacity:1; } 50%{ opacity:.3; } }
+.hud-profile-btn{
+  display:flex; align-items:center; gap:10px; background:rgba(0,0,0,0.35);
+  padding:6px 14px; border-radius:30px; border:1px solid rgba(255,255,255,0.1); cursor:pointer;
+}
+.user-avatar{ width:34px; height:34px; border-radius:50%; background:var(--accent-dim); display:flex; align-items:center; justify-content:center; font-weight:900; color:#fff; }
+.platform-icon{ font-size:12px; color:var(--accent); }
+
+/* Party Code Banner */
+.party-code-section{
+  margin:0 14px 14px; padding:20px; text-align:center;
+  background:linear-gradient(135deg, rgba(0,242,254,0.1), rgba(0,255,135,0.03));
+  border:2px solid var(--border-glow); border-radius:var(--radius);
+}
+.party-code-box{
+  display:inline-flex; align-items:center; gap:14px; background:#04060a;
+  border:1px dashed var(--accent); border-radius:14px; padding:12px 24px; margin:10px 0;
+}
+.party-code-text{ font-family:var(--font-display); font-size:28px; font-weight:900; letter-spacing:4px; color:#fff; }
+
+/* Showcase Grid */
+.showcase-grid{ display:grid; grid-template-columns:1fr; gap:14px; margin:0 14px 14px; }
+@media (min-width:768px){ .showcase-grid{ grid-template-columns:1fr 1fr; } }
+.showcase-card{ padding:20px; display:flex; flex-direction:column; gap:10px; }
+.showcase-row{ display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-radius:10px; background:rgba(0,0,0,0.3); }
+.rank-1{ border-right:4px solid var(--gold); }
+.rank-2{ border-right:4px solid #cbd5e1; }
+.rank-3{ border-right:4px solid #b45309; }
+
+/* Teams Grid */
+.grid-wrap{ padding:0 14px; }
+.teams-grid{ display:grid; grid-template-columns:1fr; gap:14px; }
+@media (min-width:640px){ .teams-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (min-width:980px){ .teams-grid{ grid-template-columns:repeat(3,1fr); } }
+@media (min-width:1320px){ .teams-grid{ grid-template-columns:repeat(4,1fr); } }
+
+.team-card{ padding:16px; display:flex; flex-direction:column; gap:10px; }
+.team-card.full{ opacity:.6; }
+.team-head{ display:flex; align-items:center; justify-content:space-between; }
+.team-head h3{ font-family:var(--font-display); font-size:18px; }
+
+.slot{
+  display:flex; align-items:center; gap:10px; padding:10px 12px;
+  border-radius:10px; background:rgba(4,6,10,0.6);
+  border:1px solid rgba(255,255,255,0.06); min-height:48px;
+}
+.slot.mine{ border-color:var(--accent); box-shadow:0 0 14px rgba(0,242,254,0.25); }
+.slot-avatar{ width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; background:#1e293b; color:var(--text-hi); }
+.slot-name{ flex:1; font-size:13px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.slot-btn{ min-height:34px; padding:0 12px; border-radius:8px; font-size:12px; font-weight:700; }
+.slot-btn.join{ background:rgba(0,242,254,0.15); color:var(--accent); border:1px solid var(--border-glow); }
+.slot-btn.leave{ background:rgba(255,77,94,0.15); color:var(--danger); border:1px solid rgba(255,77,94,0.4); }
+
+/* Platform Selectors */
+.platform-group{ display:flex; gap:8px; justify-content:center; margin:10px 0; }
+.platform-chip{
+  flex:1; padding:10px; border-radius:10px; background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.12); cursor:pointer; font-size:12px; font-weight:700;
+  display:flex; align-items:center; justify-content:center; gap:6px; transition:.2s;
+}
+.platform-chip.active{ border-color:var(--accent); background:rgba(0,242,254,0.15); color:var(--accent); }
+
+/* Profile Card Modal */
+.profile-modal-card{ max-width:400px; width:100%; padding:26px; text-align:center; }
+
+/* Admin Modal */
+.admin-card{ width:100%; max-width:760px; padding:24px; margin:20px 0; max-height:90vh; overflow-y:auto; }
+
+/* Floating Action Buttons */
+.floating-actions{
+  position:fixed; bottom:70px; left:16px; z-index:1500;
+  display:flex; flex-direction:column; gap:10px;
+}
+.floating-btn{
+  display:flex; align-items:center; gap:8px; padding:12px 18px; border-radius:30px;
+  font-size:13px; font-weight:700; transition:all .25s ease;
+}
+.floating-btn.tiktok{
+  background:linear-gradient(135deg, #121824, #07090e);
+  border:1px solid var(--border-glow); color:var(--accent);
+  box-shadow:0 0 20px rgba(0,242,254,0.25);
+}
+.floating-btn.discord{
+  background:var(--discord-blurple); color:#fff;
+  box-shadow:0 0 20px rgba(88,101,242,0.4);
+}
+.floating-btn:hover{ transform:scale(1.05); }
+
+.dev-footer{
+  position:fixed; bottom:0; left:0; right:0; z-index:1400; padding:12px; text-align:center;
+  font-size:12px; color:var(--text-lo); background:rgba(6,8,13,0.85); border-top:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+}
+</style>
+</head>
+<body>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- ================= 1. TERMS GATEKEEPER MODAL ================= -->
+<div class="overlay" id="termsOverlay">
+  <div class="glass terms-card">
+    <h1 style="color:var(--accent); font-family:var(--font-display); font-size:24px; margin-bottom:6px;">قوانين وبنود البطولة الرسمية 🏆</h1>
+    <p style="color:var(--text-lo); font-size:13px; margin-bottom:20px;">الموافقة على الشروط إلزامية لضمان المنافسة العادلة والمشاركة في الجوائز.</p>
+
+    <div class="rule">
+      <div class="rule-num">01</div>
+      <div class="rule-body">
+        <b>التواجد في الديسكورد وتطابق الاسم (إلزامي للكباتن)</b>
+        <span>يُلزم كل كابتن/أونر فريق بالتواجد داخل <b>روم الكباتن في سيرفر الديسكورد الرسمي</b> وتسمية حسابه بنفس اسمه المعتمد بالبطولة لسرعة التنسيق واستقبال طلبات الـ POV.</span>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">02</div>
+      <div class="rule-body">
+        <b>النزاهة، مكافحة الغش، وطلب التسجيلات (POV Check)</b>
+        <span>في حال الشك بلعب الخصم يجب إبلاغ المنظمين خلال <b>أقل من 3 دقائق</b>. يُلزم لاعبو الـ PC وباقي المنصات بتوفير تسجيل آخر 3 دقائق فور طلبه. رفض أو تعذر تقديم التسجيل يستبعد الفريق بالكامل فوراً.</span>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">03</div>
+      <div class="rule-body">
+        <b>قناة الصوت داخل اللعبة (Party Only)</b>
+        <span>يُلزم جميع اللاعبين بضبط الصوت داخل اللعبة على <b>صوت الفرقة فقط (Party Audio)</b>؛ ويُمنع شات اللوبي العام منعاً للإزعاج أو التشتيت.</span>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">04</div>
+      <div class="rule-body">
+        <b>الروح الرياضية وفصل الخلافات الشخصية</b>
+        <span>البطولة قائمة للمتعة والتنافس الشريف؛ تصفية الحسابات القديمة مكانها خارج البطولة. أي تصرف غير لائق يؤدي لطرد اللاعب أو فريقه مباشرة.</span>
+      </div>
+    </div>
+    <div class="rule">
+      <div class="rule-num">05</div>
+      <div class="rule-body">
+        <b>سرية كود الروم (Private Match Code)</b>
+        <span>يُمنع منعاً باتاً تسريب كود الروم لأي شخص خارج قائمة الفرق المسجلة داخل الموقع.</span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" id="acceptTermsBtn" style="margin-top:22px;">أوافق على الشروط والالتزام بالقوانين</button>
+  </div>
+</div>
+
+<!-- ================= 2. AUTH SCREEN (FORM V3 ARABIC + GOOGLE + APPLE + OTP) ================= -->
+<div class="auth-wrap hidden" id="authScreen">
+  <div class="auth-card-v3">
+    
+    <!-- الجانب الأيمن (عربي): النموذج التفاعلي -->
+    <div class="auth-form-side">
+      <h2 id="v3FormTitle"> مرحباً بك</h2>
+      <p id="v3FormSub">أنشئ حسابك الجديد للمشاركة في السكرم والجوائز.</p>
+
+      <!-- المرحلة الأولى: إدخال الإيميل/الجوال -->
+      <div id="authInputPhase">
+        <div class="f-group">
+          <label>البريد الإلكتروني أو رقم الهاتف</label>
+          <div class="f-input-wrap">
+            <input type="text" id="mainIdentifier" placeholder="name@example.com / +9665..." oninput="checkIdentifier()">
+            <i class="fa-solid fa-circle-check f-icon-valid" id="idCheckIcon"></i>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-block" id="submitInitBtn" onclick="startVerificationFlow()">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span id="submitInitText">بدء التحقق والمتابعة</span>
+        </button>
+
+        <!-- أزرار Google و Apple السريعة جنب بعض -->
+        <div class="quick-auth-grid">
+          <button type="button" class="social-v3-btn" onclick="loginWithGoogle()">
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5 13.2 4.5 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.4-.3-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 18.9 13 24 13c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5c-7.7 0-14.3 4.4-17.7 10.2z"/><path fill="#4CAF50" d="M24 43.5c5.2 0 9.9-1.8 13.5-4.9l-6.2-5.2C29.2 35 26.7 35.9 24 35.9c-5.3 0-9.7-3.6-11.3-8.5l-6.5 5C9.6 39 16.3 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.4l6.2 5.2C40.6 36.4 43.5 30.7 43.5 24c0-1.2-.1-2.4-.3-3.5z"/></svg>
+            Google
+          </button>
+          <button type="button" class="social-v3-btn" onclick="loginWithApple()">
+            <i class="fa-brands fa-apple" style="font-size:18px;"></i>
+            Apple ID
+          </button>
+        </div>
+      </div>
+
+      <!-- المرحلة الثانية: مربعات الـ OTP -->
+      <div id="authOtpPhase" class="hidden">
+        <div class="otp-container">
+  <input type="text" maxlength="1" class="otp-box" id="otpBox1" oninput="handleBoxInput(1)" onkeydown="handleBoxKey(event, 1)">
+  <input type="text" maxlength="1" class="otp-box" id="otpBox2" oninput="handleBoxInput(2)" onkeydown="handleBoxKey(event, 2)">
+  <input type="text" maxlength="1" class="otp-box" id="otpBox3" oninput="handleBoxInput(3)" onkeydown="handleBoxKey(event, 3)">
+  <input type="text" maxlength="1" class="otp-box" id="otpBox4" oninput="handleBoxInput(4)" onkeydown="handleBoxKey(event, 4)">
+  <input type="text" maxlength="1" class="otp-box" id="otpBox5" oninput="handleBoxInput(5)" onkeydown="handleBoxKey(event, 5)">
+  <input type="text" maxlength="1" class="otp-box" id="otpBox6" oninput="handleBoxInput(6)" onkeydown="handleBoxKey(event, 6)">
+</div>
+        <p style="text-align:center; font-size:12px; color:var(--text-lo); margin-top:8px;">
+        </p>
+        <button class="btn btn-ghost btn-block" style="margin-top:12px;" onclick="backToInputPhase()">تعديل البريد / الرقم</button>
+      </div>
+
+    </div>
+
+    <!-- الجانب الأيسر: مؤشر الحماية والخطوات المتحركة (معربة) -->
+    <div class="auth-security-side">
+      <div class="lock-shield pulse" id="v3LockShield">
+        <i class="fa-solid fa-lock" id="v3LockIcon"></i>
+      </div>
+
+      <div class="auth-steps-list">
+        <div class="auth-step" id="v3Step1">
+          <i class="fa-regular fa-circle"></i>
+          <span>التحقق من البيانات</span>
+        </div>
+        <div class="auth-step" id="v3Step2">
+          <i class="fa-regular fa-circle"></i>
+          <span>الفحص الأمني (OTP)</span>
+        </div>
+        <div class="auth-step" id="v3Step3">
+          <i class="fa-regular fa-circle"></i>
+          <span>المصادقة والدخول</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= 3. APP SHELL ================= -->
+<div class="app-shell hidden" id="appShell">
+
+  <!-- HUD -->
+  <header class="glass hud">
+    <div class="hud-top">
+      <div class="hud-brand">
+        <span class="live-dot"></span>
+        <h2>WARZONE SCRIMS HUB</h2>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="hud-profile-btn" onclick="openProfileModal()">
+          <div class="user-avatar" id="hudUserAvatar">?</div>
+          <div style="text-align:right;">
+            <div style="font-size:13px; font-weight:700;" id="hudUserName">لاعب</div>
+            <div style="font-size:10px; color:var(--accent);" id="hudUserRole">PLAYER</div>
+          </div>
+          <i class="fa-solid fa-chevron-down" style="font-size:10px; color:var(--text-lo);"></i>
+        </div>
+        
+        <!-- زر لوحة الإدارة (مخفي افتراضياً ولا يظهر إلا للأدمن فقط) -->
+        <button class="btn btn-ghost hidden" id="adminPanelBtn" title="لوحة المنظم"><i class="fa-solid fa-gear"></i></button>
+        
+        <button class="btn btn-ghost" onclick="logout()" title="خروج" style="color:var(--danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- كود الروم الخاص بالبطولة -->
+  <section class="party-code-section">
+    <div style="font-size:14px; font-weight:700; color:var(--neon-green); margin-bottom:6px;">
+      <i class="fa-solid fa-satellite-dish"></i> كود الروم المباشر (Private Match Code)
+    </div>
+    <div class="party-code-box">
+      <span class="party-code-text" id="partyCodeDisplay">قيد الانتظار...</span>
+      <button class="btn btn-primary" onclick="copyPartyCode()"><i class="fa-solid fa-copy"></i> نسخ الكود</button>
+    </div>
+    <p style="font-size:12px; color:var(--text-lo);">يتم إدخال هذا الكود داخل اللعبة للانضمام للروم فور فتحه من قبل المنظم</p>
+  </section>
+
+  <!-- الجوائز ولوحة الشرف والديسكورد -->
+  <section class="showcase-grid">
+    <div class="glass showcase-card">
+      <h3 style="color:var(--gold); font-size:16px;"><i class="fa-solid fa-trophy"></i> مجموع الجوائز والمراكز</h3>
+      <div class="showcase-row rank-1">
+        <span>🥇 <b>المركز الأول</b></span>
+        <span style="color:var(--gold); font-weight:900;" id="prize1Text">جائزة نقدية + شارة البطولة</span>
+      </div>
+      <div class="showcase-row rank-2">
+        <span>🥈 <b>المركز الثاني</b></span>
+        <span style="color:#cbd5e1; font-weight:700;" id="prize2Text">جائزة المركز الثاني</span>
+      </div>
+      <div class="showcase-row rank-3">
+        <span>🥉 <b>المركز الثالث</b></span>
+        <span style="color:#b45309; font-weight:700;" id="prize3Text">جائزة المركز الثالث</span>
+      </div>
+    </div>
+
+    <div class="glass showcase-card" style="justify-content:space-between;">
+      <div>
+        <h3 style="color:var(--discord-blurple); font-size:16px; margin-bottom:8px;"><i class="fa-brands fa-discord"></i> سيرفر الديسكورد الرسمي</h3>
+        <p style="font-size:13px; color:var(--text-lo); margin-bottom:12px;">
+          يجب على جميع كباتن الفرق الدخول لسيرفر الديسكورد في روم البطولة للتنسيق ورفع لقطات الـ POV.
+        </p>
+      </div>
+      <a href="https://discord.gg/feMx6vv8U5" target="_blank" rel="noopener noreferrer" class="btn btn-discord btn-block">
+        <i class="fa-brands fa-discord"></i> دخول سيرفر الديسكورد 
+      </a>
+    </div>
+  </section>
+
+  <!-- شبكة الفرق -->
+  <main class="grid-wrap">
+    <div class="teams-grid" id="teamsGrid"></div>
+  </main>
+</div>
+
+<!-- ================= 4. PROFILE & EDIT MODAL ================= -->
+<div class="overlay hidden" id="profileOverlay">
+  <div class="glass profile-modal-card">
+    <div class="user-avatar" id="modalAvatar" style="width:60px; height:60px; font-size:22px; margin:0 auto 12px;">?</div>
+    <h3 id="modalProfileName" style="margin-bottom:4px;">اسم اللاعب</h3>
+    <span class="role-pill" id="modalRoleBadge" style="background:rgba(255,255,255,0.1); padding:4px 10px; font-size:11px; border-radius:20px;">PLAYER</span>
+
+    <div style="text-align:right; margin-top:20px;">
+      <label style="font-size:12px; color:var(--text-lo); display:block; margin-bottom:6px;">الاسم داخل اللعبة (Activision ID)</label>
+      <input type="text" id="editPlayerNameInput" class="f-single-input" style="width:100%; padding:10px; background:#000; color:#fff; border:1px solid #333; border-radius:8px; margin-bottom:14px; text-align:right;">
+
+      <label style="font-size:12px; color:var(--text-lo); display:block; margin-bottom:6px;">يوزر حسابك في الديسكورد (Discord Tag)</label>
+      <input type="text" id="editPlayerDiscordInput" class="f-single-input" placeholder="username#0000" style="width:100%; padding:10px; background:#000; color:#fff; border:1px solid #333; border-radius:8px; margin-bottom:14px; text-align:right;">
+
+      <label style="font-size:12px; color:var(--text-lo); display:block; margin-bottom:6px;">المنصة التي تلعب عليها</label>
+      <div class="platform-group">
+        <div class="platform-chip active" id="chipPC" onclick="selectPlatform('PC')"><i class="fa-solid fa-desktop"></i> PC</div>
+        <div class="platform-chip" id="chipPS" onclick="selectPlatform('PlayStation')"><i class="fa-brands fa-playstation"></i> PS</div>
+        <div class="platform-chip" id="chipXB" onclick="selectPlatform('Xbox')"><i class="fa-brands fa-xbox"></i> Xbox</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-top:20px;">
+      <button class="btn btn-ghost" style="flex:1;" onclick="closeProfileModal()">إلغاء</button>
+      <button class="btn btn-primary" style="flex:1;" onclick="saveProfileChanges()">حفظ التعديلات</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 5. ADMIN CONTROL PANEL ================= -->
+<div class="overlay hidden" id="adminOverlay" style="align-items:flex-start;">
+  <div class="glass admin-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h2 style="color:var(--gold);"><i class="fa-solid fa-crown"></i> لوحة تحكم المنظم</h2>
+      <button class="btn btn-ghost" onclick="hide($('adminOverlay'))">✕</button>
+    </div>
+
+    <!-- كود الروم -->
+    <div style="background:rgba(0,0,0,0.3); padding:14px; border-radius:12px; border:1px solid rgba(255,215,0,0.25); margin-bottom:16px;">
+      <h4 style="color:var(--gold); margin-bottom:8px;"><i class="fa-solid fa-satellite-dish"></i> تحديث كود البارتي المباشر</h4>
+      <div style="display:flex; gap:10px;">
+        <input type="text" id="adminPartyCodeInput" placeholder="اكتب كود الروم الجديد..." style="flex:1; padding:10px; border-radius:8px; background:#000; color:#fff; border:1px solid #333;">
+        <button class="btn btn-gold" onclick="adminSavePartyCode()">تعميم الكود</button>
+      </div>
+    </div>
+
+    <!-- تتويج الفائزين -->
+    <div style="background:rgba(0,0,0,0.3); padding:14px; border-radius:12px; margin-bottom:16px;">
+      <h4 style="color:var(--accent); margin-bottom:8px;"><i class="fa-solid fa-award"></i> تتويج الفائزين بالبطولة</h4>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
+        <input type="text" id="setWin1" placeholder="🥇 المركز الأول" style="padding:8px; border-radius:6px; background:#000; color:#fff; border:1px solid #333;">
+        <input type="text" id="setWin2" placeholder="🥈 المركز الثاني" style="padding:8px; border-radius:6px; background:#000; color:#fff; border:1px solid #333;">
+        <input type="text" id="setWin3" placeholder="🥉 المركز الثالث" style="padding:8px; border-radius:6px; background:#000; color:#fff; border:1px solid #333;">
+      </div>
+      <button class="btn btn-primary" onclick="adminSaveWinners()" style="margin-top:10px;">حفظ وإعلان النتائج</button>
+    </div>
+
+    <!-- إدارة الإعدادات -->
+    <div style="margin-bottom:16px;">
+      <h4 style="color:var(--text-lo); margin-bottom:8px;">إعدادات اللوبي والتحكم</h4>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-ghost" onclick="adminToggleLock(true)">🔒 قفل التسجيل</button>
+        <button class="btn btn-ghost" onclick="adminToggleLock(false)">🔓 فتح التسجيل</button>
+        <button class="btn btn-danger" onclick="adminResetLobby()">⚠ تصفير كل الفرق</button>
+      </div>
+    </div>
+
+    <!-- قائمة اللاعبين والطرد -->
+    <h4 style="color:var(--text-lo); margin-bottom:8px;">إدارة اللاعبين المسجلين ومعرفات الديسكورد</h4>
+    <div class="admin-team-list" id="adminTeamList" style="display:flex; flex-direction:column; gap:8px; max-height:220px; overflow-y:auto;"></div>
+  </div>
+</div>
+
+<!-- ================= 6. JOIN SLOT MODAL ================= -->
+<div class="overlay hidden" id="joinOverlay">
+  <div class="glass" style="max-width:360px; width:100%; padding:24px; text-align:center;">
+    <h3 style="color:var(--accent); margin-bottom:12px;">حجز مقعد في الفريق</h3>
+    <input type="text" id="joinNameInput" placeholder="الاسم في Warzone (Activision ID)" style="width:100%; padding:12px; border-radius:10px; background:#000; color:#fff; border:1px solid rgba(255,255,255,0.2); margin-bottom:10px;">
+    <input type="text" id="joinDiscordInput" placeholder="حسابك في الديسكورد (Discord Tag)" style="width:100%; padding:12px; border-radius:10px; background:#000; color:#fff; border:1px solid rgba(255,255,255,0.2); margin-bottom:14px;">
+    <div style="display:flex; gap:10px; justify-content:center;">
+      <button class="btn btn-ghost" onclick="hide($('joinOverlay'))">إلغاء</button>
+      <button class="btn btn-primary" id="joinConfirmBtn" onclick="confirmSlotReservation()">تأكيد المقعد</button>
+    </div>
+  </div>
+</div>
+
+<!-- Support & Discord Floating Buttons -->
+<div class="floating-actions">
+  <a class="floating-btn discord" href="https://discord.gg/feMx6vv8U5" target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-discord"></i>
+    <span>سيرفر الديسكورد</span>
+  </a>
+  <a class="floating-btn tiktok" href="https://www.tiktok.com/@taifhannibal?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-tiktok"></i>
+    <span>الدعم والمنظم</span>
+  </a>
+</div>
+
+<div class="dev-footer">
+  جميع الحقوق محفوظة © <span style="color:#008cfe; font-weight:bold;">HANNIBAL</span> <b style="color:#46ffe6; text-shadow:0 0 8px rgba(0,255,135,0.5);">[#TAIF]</b>
+</div>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+/* 1. إعدادات Firebase */
+const firebaseConfig = {
+  apiKey: "AIzaSyBo4jmmvxrjkXVWk6qnxh6pFIqZdUwcgKY",
+  authDomain: "warzone-scrims.firebaseapp.com",
+  projectId: "warzone-scrims",
+  storageBucket: "warzone-scrims.firebasestorage.app",
+  messagingSenderId: "541834143917",
+  appId: "1:541834143917:web:640a0b5a5fa6c5558cbe24"
+};
+
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+/* الحالة العامة */
+const state = {
+  user: null,
+  profile: { name: '', discord: '', platform: 'PC', role: 'PLAYER' },
+  config: { format: 'trios', teamCount: 20, locked: false, partyCode: '', winners: {} },
+  teams: {},
+  isAdmin: false
+};
+
+function $(id){ return document.getElementById(id); }
+function show(el){ el.classList.remove('hidden'); }
+function hide(el){ el.classList.add('hidden'); }
+function slotCapacity(){ return state.config.format === 'quads' ? 4 : 3; }
+
+function toast(msg, type='info'){
+  const stack = $('toastStack');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  stack.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; setTimeout(()=>el.remove(),300); }, 3200);
+}
+
+/* 2. شروط البطولة */
+(function initTerms(){
+  if(localStorage.getItem('scrims_terms_accepted') === 'true'){
+    hide($('termsOverlay'));
+  }
+  $('acceptTermsBtn').addEventListener('click', ()=>{
+    localStorage.setItem('scrims_terms_accepted','true');
+    hide($('termsOverlay'));
+  });
+})();
+
+/* 3. تدفق المصادقة التفاعلي المعرب (Form V3 Steps & OTP) */
+function checkIdentifier(){
+  const val = $('mainIdentifier').value.trim();
+  const icon = $('idCheckIcon');
+  if(val.includes('@') || val.length >= 9){
+    icon.style.display = 'block';
+  } else {
+    icon.style.display = 'none';
+  }
+}
+
+function setV3Step(id, status){
+  const el = $(id);
+  const icon = el.querySelector('i');
+  if(status === 'active'){
+    el.className = 'auth-step active';
+    icon.className = 'fa-solid fa-circle-notch fa-spin';
+  } else if(status === 'completed'){
+    el.className = 'auth-step completed';
+    icon.className = 'fa-solid fa-circle-check';
+  }
+}
+
+async function startVerificationFlow(){
+  const val = $('mainIdentifier').value.trim();
+  if(!val){ return toast('يرجى كتابة البريد أو رقم الجوال', 'err'); }
+
+  $('submitInitBtn').disabled = true;
+  $('submitInitText').innerText = 'جاري التحقق...';
+
+  // Step 1: Credentials
+  setV3Step('v3Step1', 'active');
+  await new Promise(r => setTimeout(r, 450));
+  setV3Step('v3Step1', 'completed');
+
+  // الانتقال للـ OTP و Step 2
+  setV3Step('v3Step2', 'active');
+  hide($('authInputPhase'));
+  show($('authOtpPhase'));
+  $('v3FormTitle').innerText = "تأكيد الحساب";
+  $('v3FormSub').innerText = "أدخل رمز التحقق المكون من 6 أرقام للمتابعة.";
+  $('otpBox1').focus();
+}
+
+function backToInputPhase(){
+  show($('authInputPhase'));
+  hide($('authOtpPhase'));
+  $('v3FormTitle').innerText = "مرحباً بك مجدداً";
+  $('v3FormSub').innerText = "سجل دخولك للمشاركة في منافسات البطولة.";
+  $('submitInitBtn').disabled = false;
+  $('submitInitText').innerText = 'بدء التحقق والمتابعة';
+}
+
+function handleBoxInput(idx){
+  const box = $('otpBox' + idx);
+  if(box.value.length === 1){
+    box.classList.add('filled');
+    if(idx < 6){
+      $('otpBox' + (idx + 1)).focus();
+    } else {
+      finalizeV3Auth();
+    }
+  }
+}
+
+function handleBoxKey(e, idx){
+  if(e.key === 'Backspace' && !$('otpBox' + idx).value && idx > 1){
+    $('otpBox' + (idx - 1)).focus();
+  }
+}
+
+async function finalizeV3Auth(){
+  setV3Step('v3Step2', 'completed');
+
+  setV3Step('v3Step3', 'active');
+  await new Promise(r => setTimeout(r, 450));
+  setV3Step('v3Step3', 'completed');
+
+  const lock = $('v3LockShield');
+  const icon = $('v3LockIcon');
+  lock.classList.add('success');
+  icon.className = 'fa-solid fa-check';
+
+  await new Promise(r => setTimeout(r, 350));
+
+  try{
+    const cred = await auth.signInAnonymously();
+    const identifier = $('mainIdentifier').value.trim() || 'لاعب سكرم';
+    await saveUserProfile(cred.user.uid, identifier);
+    toast('تمت المصادقة بنجاح!', 'ok');
+  }catch(e){
+    toast('حدث خطأ أثناء المصادقة', 'err');
+  }
+}
+
+async function loginWithGoogle(){
+  try{
+    setV3Step('v3Step1', 'active');
+    const cred = await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    setV3Step('v3Step1', 'completed');
+    setV3Step('v3Step2', 'completed');
+    setV3Step('v3Step3', 'completed');
+    await saveUserProfile(cred.user.uid, cred.user.displayName || cred.user.email.split('@')[0]);
+    toast('تم تسجيل الدخول عبر Google', 'ok');
+  }catch(e){ toast(e.message, 'err'); }
+}
+
+async function loginWithApple(){
+  try{
+    setV3Step('v3Step1', 'active');
+    const provider = new firebase.auth.OAuthProvider('apple.com');
+    provider.addScope('email');
+    provider.addScope('name');
+    const cred = await auth.signInWithPopup(provider);
+    setV3Step('v3Step1', 'completed');
+    setV3Step('v3Step2', 'completed');
+    setV3Step('v3Step3', 'completed');
+    await saveUserProfile(cred.user.uid, cred.user.displayName || (cred.user.email ? cred.user.email.split('@')[0] : 'لاعب Apple'));
+    toast('تم تسجيل الدخول عبر Apple ID', 'ok');
+  }catch(e){
+    if(e.code === 'auth/operation-not-allowed' || e.code === 'auth/configuration-not-found'){
+      toast('لتفعيل Apple Login يرجى تفعيله من لوحة Firebase Authentication', 'info');
+    } else {
+      toast(e.message, 'err');
+    }
+  }
+}
+
+/* 4. إدارة البروفايل وصلاحيات الأدمن الصارمة */
+async function saveUserProfile(uid, defaultName){
+  const docRef = db.collection('users').doc(uid);
+  const snap = await docRef.get();
+  if(!snap.exists){
+    await docRef.set({
+      name: defaultName,
+      discord: '',
+      platform: 'PC',
+      role: (defaultName.toLowerCase().includes('hannibal') || defaultName.toLowerCase().includes('admin')) ? 'ADMIN' : 'PLAYER'
+    });
+  }
+}
+
+auth.onAuthStateChanged(async (user)=>{
+  state.user = user;
+  if(user){
+    hide($('authScreen'));
+    show($('appShell'));
+
+    const docRef = db.collection('users').doc(user.uid);
+    const snap = await docRef.get();
+    if(snap.exists){
+      state.profile = snap.data();
+    } else {
+      state.profile = { name: user.displayName || 'لاعب', discord: '', platform: 'PC', role: 'PLAYER' };
+    }
+
+    // التحقق الصارم من حساب الأدمن:
+    const userEmail = (user.email || '').toLowerCase();
+    const isAdminAccount = userEmail.includes('hannibal') || userEmail.includes('admin') || state.profile.role === 'ADMIN';
+
+    if(isAdminAccount){
+      state.isAdmin = true;
+      $('hudUserRole').textContent = '👑 ADMIN';
+      $('hudUserRole').style.color = 'var(--gold)';
+      show($('adminPanelBtn')); // يظهر زر الإدارة هنا فقط لحساب الأدمن
+    } else {
+      state.isAdmin = false;
+      $('hudUserRole').textContent = 'PLAYER';
+      $('hudUserRole').style.color = 'var(--accent)';
+      hide($('adminPanelBtn')); // يظل مخفياً تماماً عن أي لاعب عادي
+    }
+
+    $('hudUserName').textContent = state.profile.name;
+    $('hudUserAvatar').textContent = state.profile.name.charAt(0).toUpperCase();
+
+    startSync();
+  } else {
+    show($('authScreen'));
+    hide($('appShell'));
+    hide($('adminOverlay'));
+    hide($('adminPanelBtn'));
+    state.isAdmin = false;
+  }
+});
+
+function openProfileModal(){
+  $('modalAvatar').textContent = state.profile.name.charAt(0).toUpperCase();
+  $('modalProfileName').textContent = state.profile.name;
+  $('modalRoleBadge').textContent = state.isAdmin ? '👑 ADMIN' : 'PLAYER';
+  $('editPlayerNameInput').value = state.profile.name;
+  $('editPlayerDiscordInput').value = state.profile.discord || '';
+  selectPlatform(state.profile.platform || 'PC');
+  show($('profileOverlay'));
+}
+
+function closeProfileModal(){ hide($('profileOverlay')); }
+
+function selectPlatform(plt){
+  state.profile.platform = plt;
+  ['PC','PS','XB'].forEach(k => $('chip'+k).classList.remove('active'));
+  if(plt === 'PC') $('chipPC').classList.add('active');
+  if(plt === 'PlayStation') $('chipPS').classList.add('active');
+  if(plt === 'Xbox') $('chipXB').classList.add('active');
+}
+
+async function saveProfileChanges(){
+  const newName = $('editPlayerNameInput').value.trim();
+  const newDiscord = $('editPlayerDiscordInput').value.trim();
+  if(!newName) return toast('يرجى كتابة الاسم', 'err');
+
+  state.profile.name = newName;
+  state.profile.discord = newDiscord;
+  await db.collection('users').doc(state.user.uid).set(state.profile, { merge:true });
+  
+  $('hudUserName').textContent = newName;
+  $('hudUserAvatar').textContent = newName.charAt(0).toUpperCase();
+  closeProfileModal();
+  toast('تم حفظ بيانات البروفايل', 'ok');
+}
+
+function logout(){ auth.signOut(); }
+
+/* 5. المزامنة اللحظية (Firestore Realtime) */
+function startSync(){
+  db.collection('config').doc('lobby').onSnapshot((doc)=>{
+    if(doc.exists){
+      state.config = Object.assign({ format:'trios', teamCount:20, locked:false, partyCode:'', winners:{} }, doc.data());
+    }
+    updateUI();
+  });
+
+  db.collection('teams').onSnapshot((snap)=>{
+    const t = {};
+    snap.forEach(d => t[d.id] = d.data());
+    state.teams = t;
+    renderGrid();
+    if(!$('adminOverlay').classList.contains('hidden')) renderAdminList();
+  });
+}
+
+function updateUI(){
+  $('partyCodeDisplay').textContent = state.config.partyCode || 'بانتظار فتح الروم...';
+  renderGrid();
+}
+
+function copyPartyCode(){
+  const code = state.config.partyCode;
+  if(code){
+    navigator.clipboard.writeText(code);
+    toast('تم نسخ كود البارتي: ' + code, 'ok');
+  } else {
+    toast('لم يتم تعيين كود بعد', 'info');
+  }
+}
+
+/* 6. رسم الفرق وحجز المقاعد */
+function renderGrid(){
+  const grid = $('teamsGrid');
+  grid.innerHTML = '';
+  const cap = slotCapacity();
+  const myUid = state.user ? state.user.uid : null;
+
+  for(let i=1; i<=state.config.teamCount; i++){
+    const teamId = String(i);
+    const data = state.teams[teamId] || { slots: Array(cap).fill(null) };
+    const slots = data.slots && data.slots.length === cap ? data.slots : Array(cap).fill(null);
+    const filled = slots.filter(s=>s).length;
+
+    const card = document.createElement('div');
+    card.className = 'glass team-card' + (filled === cap ? ' full' : '');
+
+    let slotsHtml = '';
+    slots.forEach((s, idx)=>{
+      const isMine = s && myUid && s.uid === myUid;
+      if(s){
+        slotsHtml += `
+          <div class="slot ${isMine?'mine':''}">
+            <div class="slot-avatar">${s.name.substring(0,2).toUpperCase()}</div>
+            <div class="slot-name">${s.name} <span class="platform-icon">(${s.platform||'PC'})</span> ${s.discord ? `<span style="color:#5865F2; font-size:11px;">[${s.discord}]</span>` : ''}</div>
+            ${isMine ? `<button class="btn slot-btn leave" onclick="leaveTeam('${teamId}', ${idx})">مغادرة</button>` : ''}
+          </div>`;
+      } else {
+        slotsHtml += `
+          <div class="slot">
+            <div class="slot-avatar empty">+</div>
+            <div class="slot-name empty">مقعد شاغر</div>
+            <button class="btn slot-btn join" onclick="openJoinModal('${teamId}', ${idx})" ${state.config.locked?'disabled':''}>حجز</button>
+          </div>`;
+      }
+    });
+
+    card.innerHTML = `
+      <div class="team-head">
+        <h3>الفريق ${teamId.padStart(2,'0')}</h3>
+        <span style="font-size:12px; color:var(--text-lo);"><b style="color:var(--accent);">${filled}</b>/${cap}</span>
+      </div>
+      ${slotsHtml}
+    `;
+    grid.appendChild(card);
+  }
+}
+
+let pendingReservation = null;
+function openJoinModal(teamId, slotIndex){
+  pendingReservation = { teamId, slotIndex };
+  $('joinNameInput').value = state.profile.name || '';
+  $('joinDiscordInput').value = state.profile.discord || '';
+  show($('joinOverlay'));
+  $('joinNameInput').focus();
+}
+
+async function confirmSlotReservation(){
+  const name = $('joinNameInput').value.trim();
+  const discord = $('joinDiscordInput').value.trim();
+  if(!name) return toast('يرجى كتابة الاسم', 'err');
+  const { teamId, slotIndex } = pendingReservation;
+
+  try{
+    const ref = db.collection('teams').doc(teamId);
+    await db.runTransaction(async (tx)=>{
+      const snap = await tx.get(ref);
+      const data = snap.exists ? snap.data() : { slots: Array(slotCapacity()).fill(null) };
+      const slots = data.slots ? data.slots.slice() : Array(slotCapacity()).fill(null);
+      if(slots[slotIndex]) throw new Error('المقعد محجوز');
+      slots[slotIndex] = { uid: state.user.uid, name, discord, platform: state.profile.platform };
+      tx.set(ref, { slots }, { merge:true });
+    });
+    toast('تم حجز مقعدك بنجاح!', 'ok');
+    hide($('joinOverlay'));
+  }catch(e){ toast(e.message, 'err'); }
+}
+
+async function leaveTeam(teamId, slotIndex){
+  if(!confirm('هل تريد مغادرة مقعدك؟')) return;
+  const ref = db.collection('teams').doc(teamId);
+  const snap = await ref.get();
+  const slots = snap.data().slots.slice();
+  slots[slotIndex] = null;
+  await ref.update({ slots });
+  toast('تمت المغادرة', 'ok');
+}
+
+/* 7. لوحة تحكم الأدمن المباشرة (للأدمن فقط) */
+$('adminPanelBtn').addEventListener('click', ()=>{
+  if(state.isAdmin){
+    show($('adminOverlay'));
+    renderAdminList();
+  }
+});
+
+async function adminSavePartyCode(){
+  const code = $('adminPartyCodeInput').value.trim();
+  await db.collection('config').doc('lobby').set({ partyCode: code }, { merge:true });
+  toast('تم نشر وتعميم كود الروم للجميع', 'ok');
+}
+
+async function adminSaveWinners(){
+  const winners = {
+    first: $('setWin1').value.trim(),
+    second: $('setWin2').value.trim(),
+    third: $('setWin3').value.trim()
+  };
+  await db.collection('config').doc('lobby').set({ winners }, { merge:true });
+  toast('تم إعلان وتحديث الفائزين', 'ok');
+}
+
+async function adminToggleLock(locked){
+  await db.collection('config').doc('lobby').set({ locked }, { merge:true });
+  toast(locked ? 'تم قفل التسجيل' : 'تم فتح التسجيل', 'ok');
+}
+
+async function adminResetLobby(){
+  if(!confirm('سيتم حذف جميع اللاعبين وتصفير المقاعد! متابعة؟')) return;
+  const batch = db.batch();
+  for(let i=1; i<=state.config.teamCount; i++){
+    batch.set(db.collection('teams').doc(String(i)), { slots: Array(slotCapacity()).fill(null) });
+  }
+  await batch.commit();
+  toast('تم تصفير اللوبي', 'ok');
+}
+
+function renderAdminList(){
+  const wrap = $('adminTeamList');
+  wrap.innerHTML = '';
+  for(let i=1; i<=state.config.teamCount; i++){
+    const team = state.teams[String(i)];
+    if(team && team.slots){
+      team.slots.forEach((s, idx)=>{
+        if(s){
+          const row = document.createElement('div');
+          row.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:rgba(0,0,0,0.3); border-radius:8px;";
+          row.innerHTML = `
+            <span>فريق ${i} | ${s.name} (${s.platform||'PC'}) ${s.discord ? `<b style="color:#5865F2;">[DC: ${s.discord}]</b>` : ''}</span>
+            <button class="btn btn-danger" style="min-height:28px; padding:2px 10px; font-size:11px;" onclick="adminKick('${i}', ${idx})">طرد</button>
+          `;
+          wrap.appendChild(row);
+        }
+      });
+    }
+  }
+}
+
+async function adminKick(teamId, slotIndex){
+  const ref = db.collection('teams').doc(teamId);
+  const snap = await ref.get();
+  const slots = snap.data().slots.slice();
+  slots[slotIndex] = null;
+  await ref.update({ slots });
+  toast('تم طرد اللاعب', 'ok');
+}
+</script>
+</body>
+</html>
