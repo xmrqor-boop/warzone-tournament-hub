@@ -43,7 +43,7 @@ body{
 }
 ::selection{ background:var(--accent); color:#000; }
 button{ font-family:inherit; cursor:pointer; border:none; outline:none; }
-input{ font-family:inherit; }
+input, select{ font-family:inherit; }
 a{ color:inherit; text-decoration:none; }
 
 ::-webkit-scrollbar{ width:6px; height:6px; }
@@ -178,10 +178,16 @@ a{ color:inherit; text-decoration:none; }
 .showcase-grid{ display:grid; grid-template-columns:1fr; gap:14px; margin:0 14px 14px; }
 @media (min-width:768px){ .showcase-grid{ grid-template-columns:1fr 1fr; } }
 .showcase-card{ padding:20px; display:flex; flex-direction:column; gap:10px; }
-.showcase-row{ display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-radius:10px; background:rgba(0,0,0,0.3); }
+.showcase-row{ display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border-radius:10px; background:rgba(0,0,0,0.3); }
 .rank-1{ border-right:4px solid var(--gold); }
 .rank-2{ border-right:4px solid #cbd5e1; }
 .rank-3{ border-right:4px solid #b45309; }
+
+.winner-badge{
+  display:inline-block; font-size:12px; background:rgba(0, 242, 254, 0.15);
+  color:var(--accent); padding:2px 8px; border-radius:6px; margin-right:6px;
+  border:1px solid rgba(0,242,254,0.3);
+}
 
 /* Teams Grid */
 .grid-wrap{ padding:0 14px; }
@@ -393,18 +399,27 @@ a{ color:inherit; text-decoration:none; }
   <!-- الجوائز والديسكورد -->
   <section class="showcase-grid">
     <div class="glass showcase-card">
-      <h3 style="color:var(--gold); font-size:16px;"><i class="fa-solid fa-trophy"></i> مجموع الجوائز والمراكز</h3>
+      <h3 style="color:var(--gold); font-size:16px;"><i class="fa-solid fa-trophy"></i> مجموع الجوائز والمراكز الرسمية</h3>
       <div class="showcase-row rank-1">
-        <span>🥇 <b>المركز الأول</b></span>
-        <span style="color:var(--gold); font-weight:900;" id="prize1Text">جائزة نقدية + شارة البطولة</span>
+        <div>
+          <span>🥇 <b>المركز الأول</b></span>
+          <div id="prize1Winner"></div>
+        </div>
+        <span style="color:var(--gold); font-weight:900; font-size:16px;" id="prize1Text">150 $</span>
       </div>
       <div class="showcase-row rank-2">
-        <span>🥈 <b>المركز الثاني</b></span>
-        <span style="color:#cbd5e1; font-weight:700;" id="prize2Text">جائزة المركز الثاني</span>
+        <div>
+          <span>🥈 <b>المركز الثاني</b></span>
+          <div id="prize2Winner"></div>
+        </div>
+        <span style="color:#cbd5e1; font-weight:700; font-size:15px;" id="prize2Text">90 $</span>
       </div>
       <div class="showcase-row rank-3">
-        <span>🥉 <b>المركز الثالث</b></span>
-        <span style="color:#b45309; font-weight:700;" id="prize3Text">جائزة المركز الثالث</span>
+        <div>
+          <span>🥉 <b>المركز الثالث</b></span>
+          <div id="prize3Winner"></div>
+        </div>
+        <span style="color:#b45309; font-weight:700; font-size:15px;" id="prize3Text">60 $</span>
       </div>
     </div>
 
@@ -473,15 +488,45 @@ a{ color:inherit; text-decoration:none; }
       </div>
     </div>
 
+    <!-- إعدادات نظام البطولة وعدد الفرق واللاعبين -->
+    <div style="background:rgba(0,0,0,0.3); padding:14px; border-radius:12px; margin-bottom:16px; border:1px solid rgba(0,242,254,0.2);">
+      <h4 style="color:var(--accent); margin-bottom:12px;"><i class="fa-solid fa-sliders"></i> هيكلة البطولة (الفرق ونمط اللعب)</h4>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+        <div>
+          <label style="font-size:12px; color:var(--text-lo); display:block; margin-bottom:4px;">نمط اللعب (عدد اللاعبين بكل تيم):</label>
+          <select id="adminFormatSelect" style="width:100%; padding:10px; border-radius:8px; background:#000; color:#fff; border:1px solid #333;">
+            <option value="solos">سولو (1 لاعب ضد 1)</option>
+            <option value="duos">دوز (2 لاعبين ضد 2)</option>
+            <option value="trios">تريوز (3 لاعبين ضد 3)</option>
+            <option value="quads">سكواد (4 لاعبين ضد 4)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:12px; color:var(--text-lo); display:block; margin-bottom:4px;">إجمالي عدد الفرق في اللوبي:</label>
+          <input type="number" id="adminTeamCountInput" min="2" max="50" style="width:100%; padding:10px; border-radius:8px; background:#000; color:#fff; border:1px solid #333;">
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="adminSaveLobbyFormat()">حفظ وتحديث نظام البطولة</button>
+    </div>
+
     <!-- تتويج الفائزين -->
     <div style="background:rgba(0,0,0,0.3); padding:14px; border-radius:12px; margin-bottom:16px;">
-      <h4 style="color:var(--accent); margin-bottom:8px;"><i class="fa-solid fa-award"></i> تتويج الفائزين بالبطولة</h4>
+      <h4 style="color:var(--accent); margin-bottom:8px;"><i class="fa-solid fa-award"></i> تتويج الفرق الفائزة بالبطولة</h4>
       <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
-        <input type="text" id="setWin1" placeholder="🥇 المركز الأول" style="padding:8px; border-radius:6px; background:#000; color:#fff; border:1px solid #333;">
-        <input type="text" id="setWin2" placeholder="🥈 المركز الثاني" style="padding:8px; border-radius:6px; background:#000; color:#fff; border:1px solid #333;">
-        <input type="text" id="setWin3" placeholder="🥉 المركز الثالث" style="padding:8px; border-radius:6px; background:#000; color:#fff; border:1px solid #333;">
+        <div>
+          <label style="font-size:11px; color:var(--gold);">🥇 المركز الأول (150$)</label>
+          <input type="text" id="setWin1" placeholder="اسم الفريق أو الكابتن" style="width:100%; padding:8px; border-radius:6px; background:#000; color:#fff; border:1px solid #333;">
+        </div>
+        <div>
+          <label style="font-size:11px; color:#cbd5e1;">🥈 المركز الثاني (90$)</label>
+          <input type="text" id="setWin2" placeholder="اسم الفريق أو الكابتن" style="width:100%; padding:8px; border-radius:6px; background:#000; color:#fff; border:1px solid #333;">
+        </div>
+        <div>
+          <label style="font-size:11px; color:#b45309;">🥉 المركز الثالث (60$)</label>
+          <input type="text" id="setWin3" placeholder="اسم الفريق أو الكابتن" style="width:100%; padding:8px; border-radius:6px; background:#000; color:#fff; border:1px solid #333;">
+        </div>
       </div>
-      <button class="btn btn-primary" onclick="adminSaveWinners()" style="margin-top:10px;">حفظ وإعلان النتائج</button>
+      <button class="btn btn-primary" onclick="adminSaveWinners()" style="margin-top:12px;">حفظ وإعلان النتائج للجميع</button>
     </div>
 
     <!-- إدارة الإعدادات -->
@@ -552,13 +597,13 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-let authMode = "login"; // "login" أو "register"
+let authMode = "login";
 
 /* الحالة العامة */
 const state = {
   user: null,
   profile: { name: '', discord: '', platform: 'PC', role: 'PLAYER' },
-  config: { format: 'trios', teamCount: 20, locked: false, partyCode: '', winners: {} },
+  config: { format: 'trios', teamCount: 20, locked: false, partyCode: '', winners: { first:'', second:'', third:'' } },
   teams: {},
   isAdmin: false
 };
@@ -566,7 +611,14 @@ const state = {
 function $(id){ return document.getElementById(id); }
 function show(el){ if(el) el.classList.remove('hidden'); }
 function hide(el){ if(el) el.classList.add('hidden'); }
-function slotCapacity(){ return state.config.format === 'quads' ? 4 : 3; }
+
+function slotCapacity(){ 
+  const fmt = state.config.format;
+  if(fmt === 'solos') return 1;
+  if(fmt === 'duos') return 2;
+  if(fmt === 'quads') return 4;
+  return 3; // Trios الافتراضي
+}
 
 function toast(msg, type='info'){
   const stack = $('toastStack');
@@ -768,7 +820,13 @@ function logout(){
 function startSync(){
   db.collection('config').doc('lobby').onSnapshot((doc)=>{
     if(doc.exists){
-      state.config = Object.assign({ format:'trios', teamCount:20, locked:false, partyCode:'', winners:{} }, doc.data());
+      state.config = Object.assign({ 
+        format:'trios', 
+        teamCount:20, 
+        locked:false, 
+        partyCode:'', 
+        winners:{ first:'', second:'', third:'' } 
+      }, doc.data());
     }
     updateUI();
   });
@@ -784,6 +842,20 @@ function startSync(){
 
 function updateUI(){
   $('partyCodeDisplay').textContent = state.config.partyCode || 'بانتظار فتح الروم...';
+  
+  // تحديث أسماء الفائزين في واجهة الجوائز
+  const w = state.config.winners || {};
+  $('prize1Winner').innerHTML = w.first ? `<span class="winner-badge"><i class="fa-solid fa-crown"></i> الفائز: <b>${w.first}</b></span>` : '';
+  $('prize2Winner').innerHTML = w.second ? `<span class="winner-badge"><i class="fa-solid fa-medal"></i> الوصيف: <b>${w.second}</b></span>` : '';
+  $('prize3Winner').innerHTML = w.third ? `<span class="winner-badge"><i class="fa-solid fa-award"></i> الثالث: <b>${w.third}</b></span>` : '';
+
+  // تحديث خانات لوحة الأدمن بالقيم الحالية
+  if($('adminFormatSelect')) $('adminFormatSelect').value = state.config.format || 'trios';
+  if($('adminTeamCountInput')) $('adminTeamCountInput').value = state.config.teamCount || 20;
+  if($('setWin1')) $('setWin1').value = w.first || '';
+  if($('setWin2')) $('setWin2').value = w.second || '';
+  if($('setWin3')) $('setWin3').value = w.third || '';
+
   renderGrid();
 }
 
@@ -802,9 +874,10 @@ function renderGrid(){
   const grid = $('teamsGrid');
   grid.innerHTML = '';
   const cap = slotCapacity();
+  const count = parseInt(state.config.teamCount) || 20;
   const myUid = state.user ? state.user.uid : null;
 
-  for(let i=1; i<=state.config.teamCount; i++){
+  for(let i=1; i<=count; i++){
     const teamId = String(i);
     const data = state.teams[teamId] || { slots: Array(cap).fill(null) };
     const slots = data.slots && data.slots.length === cap ? data.slots : Array(cap).fill(null);
@@ -858,14 +931,18 @@ async function confirmSlotReservation(){
   const discord = $('joinDiscordInput').value.trim();
   if(!name) return toast('يرجى كتابة الاسم', 'err');
   const { teamId, slotIndex } = pendingReservation;
+  const cap = slotCapacity();
 
   try{
     const ref = db.collection('teams').doc(teamId);
     await db.runTransaction(async (tx)=>{
       const snap = await tx.get(ref);
-      const data = snap.exists ? snap.data() : { slots: Array(slotCapacity()).fill(null) };
-      const slots = data.slots ? data.slots.slice() : Array(slotCapacity()).fill(null);
-      if(slots[slotIndex]) throw new Error('المقعد محجوز');
+      const data = snap.exists ? snap.data() : { slots: Array(cap).fill(null) };
+      const slots = data.slots ? data.slots.slice() : Array(cap).fill(null);
+      
+      while(slots.length < cap) slots.push(null);
+      if(slots[slotIndex]) throw new Error('المقعد محجوز مسبقاً');
+      
       slots[slotIndex] = { uid: state.user.uid, name, discord, platform: state.profile.platform };
       tx.set(ref, { slots }, { merge:true });
     });
@@ -892,12 +969,27 @@ $('adminPanelBtn').addEventListener('click', ()=>{
   }
 });
 
+// حفظ كود الروم
 async function adminSavePartyCode(){
   const code = $('adminPartyCodeInput').value.trim();
   await db.collection('config').doc('lobby').set({ partyCode: code }, { merge:true });
   toast('تم نشر وتعميم كود الروم للجميع', 'ok');
 }
 
+// تعديل عدد الفرق ونمط اللعب (Solos / Duos / Trios / Quads)
+async function adminSaveLobbyFormat(){
+  const format = $('adminFormatSelect').value;
+  const teamCount = parseInt($('adminTeamCountInput').value) || 20;
+
+  if(teamCount < 2 || teamCount > 50){
+    return toast('عدد الفرق يجب أن يكون بين 2 و 50', 'err');
+  }
+
+  await db.collection('config').doc('lobby').set({ format, teamCount }, { merge:true });
+  toast('تم تحديث نظام وهيكلة البطولة بنجاح!', 'ok');
+}
+
+// حفظ وتتويج الفائزين
 async function adminSaveWinners(){
   const winners = {
     first: $('setWin1').value.trim(),
@@ -905,7 +997,7 @@ async function adminSaveWinners(){
     third: $('setWin3').value.trim()
   };
   await db.collection('config').doc('lobby').set({ winners }, { merge:true });
-  toast('تم إعلان وتحديث الفائزين', 'ok');
+  toast('تم حفظ وإعلان أسماء الفائزين بنجاح!', 'ok');
 }
 
 async function adminToggleLock(locked){
@@ -915,18 +1007,20 @@ async function adminToggleLock(locked){
 
 async function adminResetLobby(){
   if(!confirm('سيتم حذف جميع اللاعبين وتصفير المقاعد! متابعة؟')) return;
+  const count = parseInt(state.config.teamCount) || 20;
   const batch = db.batch();
-  for(let i=1; i<=state.config.teamCount; i++){
+  for(let i=1; i<=count; i++){
     batch.set(db.collection('teams').doc(String(i)), { slots: Array(slotCapacity()).fill(null) });
   }
   await batch.commit();
-  toast('تم تصفير اللوبي', 'ok');
+  toast('تم تصفير اللوبي بالكامل', 'ok');
 }
 
 function renderAdminList(){
   const wrap = $('adminTeamList');
   wrap.innerHTML = '';
-  for(let i=1; i<=state.config.teamCount; i++){
+  const count = parseInt(state.config.teamCount) || 20;
+  for(let i=1; i<=count; i++){
     const team = state.teams[String(i)];
     if(team && team.slots){
       team.slots.forEach((s, idx)=>{
