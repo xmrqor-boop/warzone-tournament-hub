@@ -374,7 +374,7 @@ a{ color:inherit; text-decoration:none; }
     <div class="divider-text">أو المتابعة السريعة عبر</div>
 
     <button type="button" class="google-btn-auth" onclick="loginWithGoogle()">
-      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.4-.3-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 18.9 13 24 13c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5c-7.7 0-14.3 4.4-17.7 10.2z"/><path fill="#4CAF50" d="M24 43.5c5.2 0 9.9-1.8 13.5-4.9l-6.2-5.2C29.2 35 26.7 35.9 24 35.9c-5.3 0-9.7-3.6-11.3-8.5l-6.5 5C9.6 39 16.3 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.4l6.2 5.2C40.6 36.4 43.5 30.7 43.5 24c0-1.2-.1-2.4-.3-3.5z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5 13.2 4.5 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.4-.3-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 18.9 13 24 13c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5c-7.7 0-14.3 4.4-17.7 10.2z"/><path fill="#4CAF50" d="M24 43.5c5.2 0 9.9-1.8 13.5-4.9l-6.2-5.2C29.2 35 26.7 35.9 24 35.9c-5.3 0-9.7-3.6-11.3-8.5l-6.5 5C9.6 39 16.3 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.4l6.2 5.2C40.6 36.4 43.5 30.7 43.5 24c0-1.2-.1-2.4-.3-3.5z"/></svg>
       حساب Google
     </button>
   </div>
@@ -461,7 +461,7 @@ a{ color:inherit; text-decoration:none; }
   <!-- جدول الترتيب والرانك (Leaderboard) -->
   <section class="glass leaderboard-section">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-      <h3 style="color:var(--neon-green); font-size:18px;"><i class="fa-solid fa-ranking-star"></i> جدول الترتيب العام والنقاط (Leaderboard)</h3>
+      <h3 style="color:var(--neon-green); font-size:18px;"><i class="fa-solid fa-ranking-star"></i> جدول الترتيب العام ونقاط الـ SR (Leaderboard)</h3>
       <span style="font-size:12px; color:var(--text-lo);">تحديث لحظي ومباشر</span>
     </div>
     <div style="overflow-x:auto;">
@@ -471,7 +471,7 @@ a{ color:inherit; text-decoration:none; }
             <th style="width:60px;">الترتيب</th>
             <th>الفريق</th>
             <th>اللاعبون</th>
-            <th style="text-align:left; width:100px;">إجمالي النقاط</th>
+            <th style="text-align:left; width:100px;">إجمالي SR</th>
           </tr>
         </thead>
         <tbody id="leaderboardBody">
@@ -535,11 +535,11 @@ a{ color:inherit; text-decoration:none; }
 
     <!-- إدارة النقاط اليدوية للفرق (Rank & Points) -->
     <div style="background:rgba(0,0,0,0.3); padding:14px; border-radius:12px; margin-bottom:16px; border:1px solid rgba(0,255,135,0.25);">
-      <h4 style="color:var(--neon-green); margin-bottom:10px;"><i class="fa-solid fa-chart-line"></i> تسجيل وتعديل نقاط الفرق يدوياً (الرانك)</h4>
+      <h4 style="color:var(--neon-green); margin-bottom:10px;"><i class="fa-solid fa-chart-line"></i> تسجيل وتعديل نقاط الـ SR للفرق يدوياً</h4>
       <div id="adminPointsList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:10px; max-height:220px; overflow-y:auto; padding:4px;">
         <!-- مدخلات النقاط لكل فريق -->
       </div>
-      <button class="btn btn-primary btn-block" onclick="adminSavePoints()" style="margin-top:12px;">حفظ وتحديث نقاط الرانك للجميع</button>
+      <button class="btn btn-primary btn-block" onclick="adminSavePoints()" style="margin-top:12px;">حفظ وتحديث نقاط الـ SR للجميع</button>
     </div>
 
     <!-- إعدادات نظام البطولة وعدد الفرق واللاعبين -->
@@ -969,8 +969,8 @@ function renderLeaderboard(){
     tr.innerHTML = `
       <td><span class="rank-pill ${rankClass}">#${rank}</span></td>
       <td><b>الفريق ${item.teamId.padStart(2,'0')}</b></td>
-      <td style="color:var(--text-lo); font-size:12px;">${item.members.length ? item.members.join(' • ') : 'شاغر بالكامل'}</td>
-      <td style="text-align:left; color:var(--neon-green); font-family:var(--font-display); font-size:16px;"><b>${item.score}</b> <span style="font-size:11px; color:var(--text-lo);">PTS</span></td>
+      <td style="color:var(--text-lo); font-size:12px;">${item.members.length ? item.members.join(' • ') : '<span style="color:#64748b;">فارغ بالكامل</span>'}</td>
+      <td style="text-align:left; color:var(--neon-green); font-family:var(--font-display); font-size:16px;"><b>${item.score}</b> <span style="font-size:11px; color:var(--text-lo);">SR</span></td>
     `;
     tbody.appendChild(tr);
   });
@@ -1019,7 +1019,7 @@ function renderGrid(){
       <div class="team-head">
         <div style="display:flex; align-items:center; gap:8px;">
           <h3>الفريق ${teamId.padStart(2,'0')}</h3>
-          <span class="team-score-badge"><i class="fa-solid fa-star"></i> ${teamScore} نقطة</span>
+          <span class="team-score-badge"><i class="fa-solid fa-star"></i> ${teamScore} SR</span>
         </div>
         <span style="font-size:12px; color:var(--text-lo);"><b style="color:var(--accent);">${filled}</b>/${cap}</span>
       </div>
@@ -1112,7 +1112,7 @@ async function adminSavePoints(){
   });
 
   await db.collection('config').doc('lobby').set({ points }, { merge:true });
-  toast('تم حفظ وتحديث نقاط الفرق والرانك للجميع!', 'ok');
+  toast('تم حفظ وتحديث نقاط الـ SR للجميع!', 'ok');
 }
 
 async function adminSavePartyCode(){
