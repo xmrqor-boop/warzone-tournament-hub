@@ -189,6 +189,29 @@ a{ color:inherit; text-decoration:none; }
   border:1px solid rgba(0,242,254,0.3);
 }
 
+/* Leaderboard Section */
+.leaderboard-section{
+  margin:0 14px 20px; padding:20px;
+}
+.lb-table{
+  width:100%; border-collapse:collapse; text-align:right; margin-top:12px;
+}
+.lb-table th{
+  padding:10px 14px; font-size:12px; color:var(--text-lo); border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.lb-table td{
+  padding:12px 14px; font-size:14px; font-weight:700; border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.lb-table tr:hover td{ background:rgba(0,242,254,0.03); }
+.rank-pill{
+  display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px;
+  border-radius:50%; font-family:var(--font-display); font-size:13px; font-weight:800;
+  background:rgba(255,255,255,0.06); color:#fff;
+}
+.rank-pill.r1{ background:var(--gold); color:#000; box-shadow:0 0 10px rgba(255,215,0,0.5); }
+.rank-pill.r2{ background:#cbd5e1; color:#000; }
+.rank-pill.r3{ background:#b45309; color:#fff; }
+
 /* Teams Grid */
 .grid-wrap{ padding:0 14px; }
 .teams-grid{ display:grid; grid-template-columns:1fr; gap:14px; }
@@ -200,6 +223,12 @@ a{ color:inherit; text-decoration:none; }
 .team-card.full{ opacity:.6; }
 .team-head{ display:flex; align-items:center; justify-content:space-between; }
 .team-head h3{ font-family:var(--font-display); font-size:18px; }
+
+.team-score-badge{
+  font-size:12px; font-weight:800; color:var(--gold);
+  background:rgba(255,215,0,0.1); padding:2px 8px; border-radius:6px;
+  border:1px solid rgba(255,215,0,0.25);
+}
 
 .slot{
   display:flex; align-items:center; gap:10px; padding:10px 12px;
@@ -309,7 +338,6 @@ a{ color:inherit; text-decoration:none; }
 <div class="auth-wrap hidden" id="authScreen">
   <div class="auth-card-v3">
     
-    <!-- تبويبات التبديل بين تسجيل الدخول وإنشاء حساب -->
     <div class="auth-tabs">
       <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthMode('login')">تسجيل الدخول</button>
       <button class="auth-tab-btn" id="tabRegisterBtn" onclick="switchAuthMode('register')">إنشاء حساب جديد</button>
@@ -318,7 +346,6 @@ a{ color:inherit; text-decoration:none; }
     <h2 id="authTitle" style="font-size:22px; font-weight:800; margin-bottom:6px;">تسجيل الدخول للمنصة</h2>
     <p id="authSub" style="color:var(--text-lo); font-size:13px; margin-bottom:20px;">أدخل بياناتك للمتابعة وحجز مقعد فريقك.</p>
 
-    <!-- حقل الاسم (يظهر فقط في إنشاء الحساب) -->
     <div class="f-group hidden" id="nameFieldGroup">
       <label>اسم اللاعب (داخل اللعبة)</label>
       <div class="f-input-wrap">
@@ -326,7 +353,6 @@ a{ color:inherit; text-decoration:none; }
       </div>
     </div>
 
-    <!-- حقل البريد الإلكتروني -->
     <div class="f-group">
       <label>البريد الإلكتروني (Gmail / Hotmail / وغيره)</label>
       <div class="f-input-wrap">
@@ -334,7 +360,6 @@ a{ color:inherit; text-decoration:none; }
       </div>
     </div>
 
-    <!-- حقل كلمة المرور -->
     <div class="f-group">
       <label>كلمة المرور</label>
       <div class="f-input-wrap">
@@ -348,9 +373,8 @@ a{ color:inherit; text-decoration:none; }
 
     <div class="divider-text">أو المتابعة السريعة عبر</div>
 
-    <!-- زر Google -->
     <button type="button" class="google-btn-auth" onclick="loginWithGoogle()">
-      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5 13.2 4.5 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.4-.3-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 18.9 13 24 13c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5c-7.7 0-14.3 4.4-17.7 10.2z"/><path fill="#4CAF50" d="M24 43.5c5.2 0 9.9-1.8 13.5-4.9l-6.2-5.2C29.2 35 26.7 35.9 24 35.9c-5.3 0-9.7-3.6-11.3-8.5l-6.5 5C9.6 39 16.3 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.4l6.2 5.2C40.6 36.4 43.5 30.7 43.5 24c0-1.2-.1-2.4-.3-3.5z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.4 29.3 35 24 35c-6.1 0-11-4.9-11-11s4.9-11 11-11c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5 13.2 4.5 24S13.2 43.5 24 43.5 43.5 34.8 43.5 24c0-1.2-.1-2.4-.3-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16 18.9 13 24 13c2.8 0 5.3 1 7.3 2.7l6-6C33.9 6.5 29.2 4.5 24 4.5c-7.7 0-14.3 4.4-17.7 10.2z"/><path fill="#4CAF50" d="M24 43.5c5.2 0 9.9-1.8 13.5-4.9l-6.2-5.2C29.2 35 26.7 35.9 24 35.9c-5.3 0-9.7-3.6-11.3-8.5l-6.5 5C9.6 39 16.3 43.5 24 43.5z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4 5.4l6.2 5.2C40.6 36.4 43.5 30.7 43.5 24c0-1.2-.1-2.4-.3-3.5z"/></svg>
       حساب Google
     </button>
   </div>
@@ -376,9 +400,7 @@ a{ color:inherit; text-decoration:none; }
           <i class="fa-solid fa-chevron-down" style="font-size:10px; color:var(--text-lo);"></i>
         </div>
         
-        <!-- زر لوحة تحكم المنظم للأدمن -->
         <button class="btn btn-ghost hidden" id="adminPanelBtn" title="لوحة المنظم" style="color:var(--gold); border-color:rgba(255,215,0,0.3);"><i class="fa-solid fa-crown"></i> لوحة الأدمن</button>
-        
         <button class="btn btn-ghost" onclick="logout()" title="خروج" style="color:var(--danger);"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
       </div>
     </div>
@@ -430,9 +452,32 @@ a{ color:inherit; text-decoration:none; }
           يتوجب على جميع قادة الفرق الانضمام إلى سيرفر الديسكورد والتواجد في الروم الخاص بالبطولة، وذلك لتنسيق المباريات وتأكيد الحضور ورفع اللقطات المطلوبة
         </p>
       </div>
-      <a href="https://discord.gg/feMx6vv8U5" target="_blank" rel="noopener noreferrer" class="btn btn-discord btn-block">
+      <a href="https://discord.com/invite/rYdxf5Dr" target="_blank" rel="noopener noreferrer" class="btn btn-discord btn-block">
         <i class="fa-brands fa-discord"></i> دخول سيرفر الديسكورد 
       </a>
+    </div>
+  </section>
+
+  <!-- جدول الترتيب والرانك (Leaderboard) -->
+  <section class="glass leaderboard-section">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <h3 style="color:var(--neon-green); font-size:18px;"><i class="fa-solid fa-ranking-star"></i> جدول الترتيب العام والنقاط (Leaderboard)</h3>
+      <span style="font-size:12px; color:var(--text-lo);">تحديث لحظي ومباشر</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th style="width:60px;">الترتيب</th>
+            <th>الفريق</th>
+            <th>اللاعبون</th>
+            <th style="text-align:left; width:100px;">إجمالي النقاط</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- يُملأ عبر الجافاسكريبت -->
+        </tbody>
+      </table>
     </div>
   </section>
 
@@ -486,6 +531,15 @@ a{ color:inherit; text-decoration:none; }
         <input type="text" id="adminPartyCodeInput" placeholder="اكتب كود الروم الجديد..." style="flex:1; padding:10px; border-radius:8px; background:#000; color:#fff; border:1px solid #333;">
         <button class="btn btn-gold" onclick="adminSavePartyCode()">تعميم الكود</button>
       </div>
+    </div>
+
+    <!-- إدارة النقاط اليدوية للفرق (Rank & Points) -->
+    <div style="background:rgba(0,0,0,0.3); padding:14px; border-radius:12px; margin-bottom:16px; border:1px solid rgba(0,255,135,0.25);">
+      <h4 style="color:var(--neon-green); margin-bottom:10px;"><i class="fa-solid fa-chart-line"></i> تسجيل وتعديل نقاط الفرق يدوياً (الرانك)</h4>
+      <div id="adminPointsList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:10px; max-height:220px; overflow-y:auto; padding:4px;">
+        <!-- مدخلات النقاط لكل فريق -->
+      </div>
+      <button class="btn btn-primary btn-block" onclick="adminSavePoints()" style="margin-top:12px;">حفظ وتحديث نقاط الرانك للجميع</button>
     </div>
 
     <!-- إعدادات نظام البطولة وعدد الفرق واللاعبين -->
@@ -603,7 +657,14 @@ let authMode = "login";
 const state = {
   user: null,
   profile: { name: '', discord: '', platform: 'PC', role: 'PLAYER' },
-  config: { format: 'trios', teamCount: 20, locked: false, partyCode: '', winners: { first:'', second:'', third:'' } },
+  config: { 
+    format: 'trios', 
+    teamCount: 20, 
+    locked: false, 
+    partyCode: '', 
+    winners: { first:'', second:'', third:'' },
+    points: {}
+  },
   teams: {},
   isAdmin: false
 };
@@ -617,7 +678,7 @@ function slotCapacity(){
   if(fmt === 'solos') return 1;
   if(fmt === 'duos') return 2;
   if(fmt === 'quads') return 4;
-  return 3; // Trios الافتراضي
+  return 3;
 }
 
 function toast(msg, type='info'){
@@ -744,7 +805,6 @@ auth.onAuthStateChanged(async (user)=>{
       state.profile = { name: user.displayName || 'لاعب', discord: '', platform: 'PC', role: 'PLAYER' };
     }
 
-    // التحقق من صلاحية الأدمن
     const userEmail = (user.email || state.profile.email || '').toLowerCase().trim();
     const isAdminAccount = userEmail === ADMIN_EMAIL.toLowerCase() || state.profile.role === 'ADMIN';
 
@@ -825,7 +885,8 @@ function startSync(){
         teamCount:20, 
         locked:false, 
         partyCode:'', 
-        winners:{ first:'', second:'', third:'' } 
+        winners:{ first:'', second:'', third:'' },
+        points:{}
       }, doc.data());
     }
     updateUI();
@@ -836,20 +897,22 @@ function startSync(){
     snap.forEach(d => t[d.id] = d.data());
     state.teams = t;
     renderGrid();
-    if(!$('adminOverlay').classList.contains('hidden')) renderAdminList();
+    renderLeaderboard();
+    if(!$('adminOverlay').classList.contains('hidden')){
+      renderAdminList();
+      renderAdminPointsInputs();
+    }
   });
 }
 
 function updateUI(){
   $('partyCodeDisplay').textContent = state.config.partyCode || 'بانتظار فتح الروم...';
   
-  // تحديث أسماء الفائزين في واجهة الجوائز
   const w = state.config.winners || {};
   $('prize1Winner').innerHTML = w.first ? `<span class="winner-badge"><i class="fa-solid fa-crown"></i> الفائز: <b>${w.first}</b></span>` : '';
   $('prize2Winner').innerHTML = w.second ? `<span class="winner-badge"><i class="fa-solid fa-medal"></i> الوصيف: <b>${w.second}</b></span>` : '';
   $('prize3Winner').innerHTML = w.third ? `<span class="winner-badge"><i class="fa-solid fa-award"></i> الثالث: <b>${w.third}</b></span>` : '';
 
-  // تحديث خانات لوحة الأدمن بالقيم الحالية
   if($('adminFormatSelect')) $('adminFormatSelect').value = state.config.format || 'trios';
   if($('adminTeamCountInput')) $('adminTeamCountInput').value = state.config.teamCount || 20;
   if($('setWin1')) $('setWin1').value = w.first || '';
@@ -857,6 +920,7 @@ function updateUI(){
   if($('setWin3')) $('setWin3').value = w.third || '';
 
   renderGrid();
+  renderLeaderboard();
 }
 
 function copyPartyCode(){
@@ -869,19 +933,64 @@ function copyPartyCode(){
   }
 }
 
-/* 8. رسم الفرق وحجز المقاعد */
+/* 8. نظام الرانك وحساب النقاط (Leaderboard) */
+function renderLeaderboard(){
+  const tbody = $('leaderboardBody');
+  if(!tbody) return;
+  tbody.innerHTML = '';
+
+  const count = parseInt(state.config.teamCount) || 20;
+  const list = [];
+  const pointsMap = state.config.points || {};
+
+  for(let i=1; i<=count; i++){
+    const teamId = String(i);
+    const teamData = state.teams[teamId] || { slots: [] };
+    const members = (teamData.slots || []).filter(s => s).map(s => s.name);
+    const score = parseInt(pointsMap[teamId]) || 0;
+
+    list.push({
+      teamId,
+      members,
+      score
+    });
+  }
+
+  list.sort((a,b) => b.score - a.score);
+
+  list.forEach((item, index) => {
+    const rank = index + 1;
+    let rankClass = '';
+    if(rank === 1) rankClass = 'r1';
+    else if(rank === 2) rankClass = 'r2';
+    else if(rank === 3) rankClass = 'r3';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span class="rank-pill ${rankClass}">#${rank}</span></td>
+      <td><b>الفريق ${item.teamId.padStart(2,'0')}</b></td>
+      <td style="color:var(--text-lo); font-size:12px;">${item.members.length ? item.members.join(' • ') : 'شاغر بالكامل'}</td>
+      <td style="text-align:left; color:var(--neon-green); font-family:var(--font-display); font-size:16px;"><b>${item.score}</b> <span style="font-size:11px; color:var(--text-lo);">PTS</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/* 9. رسم الفرق وحجز المقاعد */
 function renderGrid(){
   const grid = $('teamsGrid');
   grid.innerHTML = '';
   const cap = slotCapacity();
   const count = parseInt(state.config.teamCount) || 20;
   const myUid = state.user ? state.user.uid : null;
+  const pointsMap = state.config.points || {};
 
   for(let i=1; i<=count; i++){
     const teamId = String(i);
     const data = state.teams[teamId] || { slots: Array(cap).fill(null) };
     const slots = data.slots && data.slots.length === cap ? data.slots : Array(cap).fill(null);
     const filled = slots.filter(s=>s).length;
+    const teamScore = parseInt(pointsMap[teamId]) || 0;
 
     const card = document.createElement('div');
     card.className = 'glass team-card' + (filled === cap ? ' full' : '');
@@ -908,7 +1017,10 @@ function renderGrid(){
 
     card.innerHTML = `
       <div class="team-head">
-        <h3>الفريق ${teamId.padStart(2,'0')}</h3>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h3>الفريق ${teamId.padStart(2,'0')}</h3>
+          <span class="team-score-badge"><i class="fa-solid fa-star"></i> ${teamScore} نقطة</span>
+        </div>
         <span style="font-size:12px; color:var(--text-lo);"><b style="color:var(--accent);">${filled}</b>/${cap}</span>
       </div>
       ${slotsHtml}
@@ -961,22 +1073,54 @@ async function leaveTeam(teamId, slotIndex){
   toast('تمت المغادرة', 'ok');
 }
 
-/* 9. لوحة تحكم الأدمن المباشرة */
+/* 10. لوحة تحكم الأدمن المباشرة */
 $('adminPanelBtn').addEventListener('click', ()=>{
   if(state.isAdmin){
     show($('adminOverlay'));
     renderAdminList();
+    renderAdminPointsInputs();
   }
 });
 
-// حفظ كود الروم
+function renderAdminPointsInputs(){
+  const box = $('adminPointsList');
+  if(!box) return;
+  box.innerHTML = '';
+  const count = parseInt(state.config.teamCount) || 20;
+  const pointsMap = state.config.points || {};
+
+  for(let i=1; i<=count; i++){
+    const teamId = String(i);
+    const val = pointsMap[teamId] !== undefined ? pointsMap[teamId] : 0;
+    const item = document.createElement('div');
+    item.style.cssText = "background:rgba(0,0,0,0.5); padding:8px; border-radius:8px; border:1px solid #222; text-align:center;";
+    item.innerHTML = `
+      <div style="font-size:11px; color:var(--text-lo); margin-bottom:4px;">فريق ${teamId}</div>
+      <input type="number" class="admin-score-inp" data-team="${teamId}" value="${val}" style="width:100%; text-align:center; padding:6px; border-radius:6px; background:#080b12; color:var(--gold); font-weight:800; border:1px solid #444;">
+    `;
+    box.appendChild(item);
+  }
+}
+
+async function adminSavePoints(){
+  const inputs = document.querySelectorAll('.admin-score-inp');
+  const points = Object.assign({}, state.config.points || {});
+
+  inputs.forEach(inp => {
+    const tid = inp.getAttribute('data-team');
+    points[tid] = parseInt(inp.value) || 0;
+  });
+
+  await db.collection('config').doc('lobby').set({ points }, { merge:true });
+  toast('تم حفظ وتحديث نقاط الفرق والرانك للجميع!', 'ok');
+}
+
 async function adminSavePartyCode(){
   const code = $('adminPartyCodeInput').value.trim();
   await db.collection('config').doc('lobby').set({ partyCode: code }, { merge:true });
   toast('تم نشر وتعميم كود الروم للجميع', 'ok');
 }
 
-// تعديل عدد الفرق ونمط اللعب (Solos / Duos / Trios / Quads)
 async function adminSaveLobbyFormat(){
   const format = $('adminFormatSelect').value;
   const teamCount = parseInt($('adminTeamCountInput').value) || 20;
@@ -989,7 +1133,6 @@ async function adminSaveLobbyFormat(){
   toast('تم تحديث نظام وهيكلة البطولة بنجاح!', 'ok');
 }
 
-// حفظ وتتويج الفائزين
 async function adminSaveWinners(){
   const winners = {
     first: $('setWin1').value.trim(),
